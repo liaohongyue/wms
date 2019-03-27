@@ -1,0 +1,222 @@
+{% extends "base/projectBase.html" %}
+
+{% block title %}
+    <title>分析信息列表</title>
+{% endblock %}
+
+{% block rightContent %}
+
+
+<div class=" ">
+        <ol class=" breadcrumb">
+            <li class=" breadcrumb-item"><a href="#">药学院</a></li>
+            <li class=" breadcrumb-item"><a href="#">张三</a></li>
+            <li class=" breadcrumb-item"><a href="#">AM20190124-01</a></li>
+        </ol>
+    </div>
+
+    <div>
+        <h3>样品信息</h3>
+        
+        <table class=" table table-hover">
+            <thead class=" table-info rounded" id="thead">
+                <tr>
+                    <td>爱默基因编号</td>
+                    <td>建库类型</td>
+                    <td>测序类型</td>
+                    <td>样本类型</td>
+                    <td>物种类型</td>
+                    <td>测序量</td>
+                    <td>index编号</td>
+                    <td>index正向序列</td>
+                    <td>RNA提取情况</td>
+                    <td>测序次数</td>
+                    <td>图表中名字</td>
+                    <td>操作</td>
+                </tr>
+            </thead>
+            <tbody id="tbody">
+                <tr>
+                    <td>S18083101</td>
+                    <td>扩增子文库</td>
+                    <td>PE(SE)150</td>
+                    <td>组织</td>
+                    <td>Homo_sapiens</td>
+                    <td>6G raw data</td>
+                    <td>A705</td>
+                    <td>ATCACGAC</td>
+                    <td>无降解</td>
+                    <td>首测</td>
+                    <td>C1</td>
+                    <td>
+                            <button class="btn btn-secondary"><a href="{{ url_for('samples.samplesEdit') }}"> 编辑</a></button>
+                        <button class="btn btn-danger">删除</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>S18083102</td>
+                    <td>扩增子文库</td>
+                    <td>PE(SE)150</td>
+                    <td>组织</td>
+                    <td>Homo_sapiens</td>
+                    <td>6G raw data</td>
+                    <td>A705</td>
+                    <td>ATCACGAC</td>
+                    <td>无降解</td>
+                    <td>首测</td>
+                    <td>C2</td>
+                    <td>
+                            <button class="btn btn-secondary"><a href="{{ url_for('samples.samplesEdit') }}"> 编辑</a></button>
+                        <button class="btn btn-danger">删除</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>S18083103</td>
+                    <td>扩增子文库</td>
+                    <td>PE(SE)150</td>
+                    <td>组织</td>
+                    <td>Homo_sapiens</td>
+                    <td>6G raw data</td>
+                    <td>A705</td>
+                    <td>ATCACGAC</td>
+                    <td>无降解</td>
+                    <td>首测</td>
+                    <td>C3</td>
+                    <td>
+                            <button class="btn btn-secondary"><a href="{{ url_for('samples.samplesEdit') }}"> 编辑</a></button>
+                        <button class="btn btn-danger">删除</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>S18083104</td>
+                    <td>扩增子文库</td>
+                    <td>PE(SE)150</td>
+                    <td>组织</td>
+                    <td>Homo_sapiens</td>
+                    <td>6G raw data</td>
+                    <td>A705</td>
+                    <td>ATCACGAC</td>
+                    <td>无降解</td>
+                    <td>首测</td>
+                    <td>T1</td>
+                    <td>
+                            <button class="btn btn-secondary"><a href="{{ url_for('samples.samplesEdit') }}"> 编辑</a></button>
+                        <button class="btn btn-danger">删除</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>S18083105</td>
+                    <td>扩增子文库</td>
+                    <td>PE(SE)150</td>
+                    <td>组织</td>
+                    <td>Homo_sapiens</td>
+                    <td>6G raw data</td>
+                    <td>A705</td>
+                    <td>ATCACGAC</td>
+                    <td>无降解</td>
+                    <td>首测</td>
+                    <td>T2</td>
+                    <td>
+                            <button class="btn btn-secondary"><a href="{{ url_for('samples.samplesEdit') }}"> 编辑</a></button>
+                        <button class="btn btn-danger">删除</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>S18083106</td>
+                    <td>扩增子文库</td>
+                    <td>PE(SE)150</td>
+                    <td>组织</td>
+                    <td>Homo_sapiens</td>
+                    <td>6G raw data</td>
+                    <td>A705</td>
+                    <td>ATCACGAC</td>
+                    <td>无降解</td>
+                    <td>首测</td>
+                    <td>T3</td>
+                    <td>
+                            <button class="btn btn-secondary"><a href="{{ url_for('samples.samplesEdit') }}"> 编辑</a></button>
+                        <button class="btn btn-danger">删除</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class=" d-flex  justify-content-center">
+            <ul class="pagination">
+                <li class="page-item"><a class="page-link" href="#">上一页</a></li>
+                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item"><a class="page-link" href="#">4</a></li>
+                <li class="page-item"><a class="page-link" href="#">5</a></li>
+                <li class="page-item"><a class="page-link" href="#">6</a></li>
+                <li class="page-item"><a class="page-link" href="#">下一页</a></li>
+            </ul>
+        </div>
+
+        <a class="btn btn-primary" href="{{ url_for('samples.samplesAdd') }}">添加样品</a>
+    </div><!-- end sample info-->
+    <hr>
+    <div>
+        <h3>差异分析</h3>
+        <table class=" table table-hover">
+            <thead class=" table-info">
+                <td>组号</td>
+                <td>参考组组名</td>
+                <td>参照组样本</td>
+                <td>对照组组名</td>
+                <td>对照组样本</td>
+                <td>操作</td>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>coontrol01</td>
+                    <td>C1,C2,C3</td>
+                    <td>treatment</td>
+                    <td>C4,C5,C6</td>
+                    <td>
+                        <button class="btn btn-secondary"><a href="{{ url_for('analysis.analysisEdit') }}"> 编辑</a></button>
+                        <button class="btn btn-danger">删除</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>coontrol01</td>
+                    <td>C1,C2,C5</td>
+                    <td>treatment</td>
+                    <td>C4,C3,C6</td>
+                    <td>
+                        <button class="btn btn-secondary"><a href="{{ url_for('analysis.analysisEdit') }}"> 编辑</a></button>
+                        <button class="btn btn-danger">删除</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>coontrol01</td>
+                    <td>C1,C2,C6</td>
+                    <td>treatment</td>
+                    <td>C4,C5,C3</td>
+                    <td>
+                        <button class="btn btn-secondary"><a href="{{ url_for('analysis.analysisEdit') }}"> 编辑</a></button>
+                        <button class="btn btn-danger">删除</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <hr>
+    <div>
+        <form class=" form-inline" action="">
+            <label for="">参照组组名：</label>
+            <input class=" form-control" type="text" name="" id="">
+            <label for="">参考组样本：</label>
+            <input class=" form-control" type="text" name="" id="">
+            <label for="">对照组组名：</label>
+            <input class=" form-control" type="text" name="" id="">
+            <label for="">对照组样本：</label>
+            <input class=" form-control" type="text" name="" id="">
+            <button class="btn btn-primary" type="submit">添加</button>
+        </form>
+    </div>
+
+{% endblock %}

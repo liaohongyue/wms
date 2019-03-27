@@ -1,0 +1,35 @@
+{% extends 'base/base.html' %}
+
+
+{% block container %}
+<div class=" row">
+    <div class=" col-1">
+        <div>
+            <ul class=" nav nav-pills nav-pills">
+                <li class=" nav-item">
+                    <a class=" nav-link" href="{{ url_for('client.clientlist') }}" id="clientInfo">客户信息</a>
+                </li>
+                <li class=" nav-item">
+                    <a class=" nav-link" href="{{ url_for('project.projectList') }}" id="projectInfo">项目信息</a>
+                </li>
+                <li class=" nav-item">
+                    <a class=" nav-link" href="#" id="analysisInfo" >分析信息</a>
+                </li>
+                <li class=" nav-item">
+                    <a class=" nav-link" href="{{ url_for('samples.samplesList') }}" id="samplesInfo">样品信息</a>
+                </li>
+
+            </ul>
+
+        </div>
+
+    </div>
+
+    <div class=" col-11">
+        {% block rightContent %}
+        {% endblock %}
+
+    </div>
+</div>
+
+{% endblock %}

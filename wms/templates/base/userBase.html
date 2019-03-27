@@ -1,0 +1,28 @@
+{% extends 'base/base.html' %}
+
+{% block container %}
+<div class=" row">
+    <div class=" col-1">
+
+        <div>
+            <ul class=" nav nav-pills ">
+                <li class=" nav-item">
+                    <a class=" nav-link active" href="#">用户列表</a>
+                </li>
+                <li class=" nav-item">
+                    <a class=" nav-link" href="#">修改权限</a>
+                </li>
+            </ul>
+        </div>
+    </div><!-- end col-2 -->
+
+
+
+    <div class=" col-11">
+        {% block rightContent %}
+        {% endblock %}
+
+    </div>
+</div>
+
+{% endblock %}

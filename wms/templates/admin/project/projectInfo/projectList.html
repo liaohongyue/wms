@@ -1,0 +1,131 @@
+{% extends "base/projectBase.html" %}
+
+{% block title %}
+    <title>项目列表</title>
+{% endblock %}
+
+{% block rightContent %}
+
+<div class=" ">
+        <ol class=" breadcrumb">
+            <li class=" breadcrumb-item"><a href="#">药学院</a></li>
+            <li class=" breadcrumb-item"><a href="#">张三</a></li>
+        </ol>
+    </div>
+    <h3>项目信息</h3>
+
+    <hr>
+    <div class="">
+        <a class="btn btn-info" href="{{ url_for('project.projectAdd') }}">添加项目</a>
+    </div>
+
+    <hr>
+    <div>
+        <form class=" form-inline" action="">
+            <label for="">筛选条件：</label>
+            <input class=" form-control" type="text" placeholder="项目编号">
+            <button class=" btn btn-info">搜索</button>
+        </form>
+    </div>
+    <hr>
+
+    <div>
+        <table class=" table table-hover table-bordered">
+            <thead class=" table-info rounded-top ">
+                <td>项目编号</td>
+                <td>样品信息</td>
+                <td>分析信息</td>
+                <td>备注</td>
+                <td>添加时间</td>
+                <td>修改时间</td>
+                <td>查看详细</td>
+                <td>操作</td>
+
+            </thead>
+            <tbody>
+                <tr>
+                    <td>AM20190124-01</td>
+                    <td>5个样品</td>
+                    <td>4个分析</td>
+                    <td></td>
+                    <td>2018-03-25 11:23</td>
+                    <td>2018-03-25 14:23</td>
+                    <td><a href="{{ url_for('analysis.analysisList') }}">查看</a>
+                    </td>
+                    <td>
+                        <div class=" btn-group">
+                            <button class=" btn btn-secondary">编辑</button>
+                            <button class=" btn btn-danger">删除</button>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>AM20190124-01</td>
+                    <td>5个样品</td>
+                    <td>4个分析</td>
+                    <td></td>
+                    <td>2018-03-25 11:23</td>
+                    <td>2018-03-25 14:23</td>
+                    <td><a href="{{ url_for('analysis.analysisList') }}">查看</a>
+                    </td>
+                    <td>
+                        <div class=" btn-group">
+                            <button class=" btn btn-secondary">编辑</button>
+                            <button class=" btn btn-danger">删除</button>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>AM20190124-01</td>
+                    <td>5个样品</td>
+                    <td>4个分析</td>
+                    <td></td>
+                    <td>2018-03-25 11:23</td>
+                    <td>2018-03-25 14:23</td>
+                    <td><a href="{{ url_for('analysis.analysisList') }}">查看</a>
+                    </td>
+                    <td>
+                        <div class=" btn-group">
+                            <button class=" btn btn-secondary">编辑</button>
+                            <button class=" btn btn-danger">删除</button>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>AM20190124-01</td>
+                    <td>5个样品</td>
+                    <td>4个分析</td>
+                    <td></td>
+                    <td>2018-03-25 11:23</td>
+                    <td>2018-03-25 14:23</td>
+                    <td><a href="{{ url_for('analysis.analysisList') }}">查看</a></td>
+                    <td>
+                        <div class=" btn-group">
+                            <button class=" btn btn-secondary">编辑</button>
+                            <button class=" btn btn-danger">删除</button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div><!-- end table -->
+
+    <hr>
+
+    <div class=" d-flex  justify-content-center">
+        <ul class="pagination">
+            <li class="page-item"><a class="page-link" href="#">上一页</a></li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item"><a class="page-link" href="#">4</a></li>
+            <li class="page-item"><a class="page-link" href="#">5</a></li>
+            <li class="page-item"><a class="page-link" href="#">6</a></li>
+            <li class="page-item"><a class="page-link" href="#">下一页</a></li>
+        </ul>
+    </div>
+
+{% endblock %}

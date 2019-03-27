@@ -1,0 +1,142 @@
+{% extends "base/projectBase.html" %}
+
+{% block title %}
+<title>添加样品信息</title>
+{% endblock %}
+
+{% block addHead %}
+<script>
+    $(function () {
+        $("#checkData").click(function () {
+            $tableBody = ''
+            $samplesArea = $("#SamplesArea").val();
+            $samplesList = $samplesArea.split('\n');
+            for ($i in $samplesList) {
+                $lineData = $samplesList[$i];
+                $lineData = $lineData.split('\t')
+                if ($lineData[0] == '') continue;
+                $amogeneNumber = $lineData[0];
+                $libraryType = $lineData[1];
+                $seqType = $lineData[2];
+                $sampleType = $lineData[3];
+                $species = $lineData[4];
+                $seqDose = $lineData[5];
+                $indexNumber = $lineData[6];
+                $indexForward = $lineData[7];
+                $extractStatus = $lineData[8];
+                $seqTimes = $lineData[9];
+                $chartName = $lineData[10];
+
+                $tr = '<tr>\n' +
+                    ' <td>' + $amogeneNumber + '</td>\n' +
+                    ' <td>' + $libraryType + '</td>\n' +
+                    ' <td>' + $seqType + '</td>\n' +
+                    ' <td>' + $sampleType + '</td>\n' +
+                    ' <td>' + $species + '</td>\n' +
+                    ' <td>' + $seqDose + '</td>\n' +
+                    '  <td>' + $indexNumber + '</td>\n' +
+                    '  <td>' + $indexForward + '</td>\n' +
+                    '  <td>' + $extractStatus + '</td>\n' +
+                    '  <td>' + $seqTimes + '</td>\n' +
+                    '  <td>' + $chartName + '</td>\n' +
+                    '  </tr>';
+                $tableBody = $tableBody + $tr;
+            }
+            $("#tbody").html($tableBody);
+            $("#SamplesArea").attr('disabled', 'disabled');
+            $("#checkData").hide();
+            $('#resetData').show();
+            $("#submit").show();
+
+        });
+    });
+
+    $(function () {
+            $('#resetData').click(function () {
+                $("#SamplesArea").val('');
+                $("#SamplesArea").removeAttr('disabled');
+                $("#tbody").empty();
+                $("#checkData").show();
+                $('#resetData').hide();
+            });
+        }
+
+    );
+    $(document).ready(function () {
+        $('#resetData').hide();
+        $('#submit').hide();
+    })
+</script>
+{% endblock %}
+
+
+{% block rightContent %}
+
+<div class=" ">
+    <ol class=" breadcrumb">
+        <li class=" breadcrumb-item"><a href="#">药学院</a></li>
+        <li class=" breadcrumb-item"><a href="#">张三</a></li>
+        <li class=" breadcrumb-item"><a href="#">AM20190124-01</a></li>
+        <li class=" breadcrumb-item"><a href="#">样品信息</a></li>
+        <li class=" breadcrumb-item"><a href="#">添加样品</a></li>
+    </ol>
+</div>
+<form action="">
+    <div class="form-group">
+        <label for="">项目编号:</label>
+        <input type="text" class="form-control" id="projectNumber" value="AM20190124-01" disabled>
+    </div>
+
+    <div class="form-group">
+        <label for="email">样品信息:</label>
+        <table class=" table">
+            <thead>
+                <td>爱默基因编号</td>
+                <td>建库类型</td>
+                <td>测序类型</td>
+                <td>样本类型</td>
+                <td>物种类型</td>
+                <td>测序量</td>
+                <td>index编号</td>
+                <td>index正向序列</td>
+                <td>RNA提取情况</td>
+                <td>测序次数</td>
+                <td>图表中名字</td>
+            </thead>
+        </table>
+        <textarea class="form-control" rows="5" id="SamplesArea"></textarea>
+        <div class=" btn-group">
+            <span class=" btn btn-primary" id="checkData">验证数据</span>
+            <span class=" btn btn-danger" id="resetData">重置</span>
+        </div>
+    </div>
+    <hr>
+    <div>
+        <caption>
+            <h3>样品信息</h3>
+        </caption>
+        <table class=" table table-hover">
+            <thead class=" table-info rounded" id="thead">
+                <td>爱默基因编号</td>
+                <td>建库类型</td>
+                <td>测序类型</td>
+                <td>样本类型</td>
+                <td>物种类型</td>
+                <td>测序量</td>
+                <td>index编号</td>
+                <td>index正向序列</td>
+                <td>RNA提取情况</td>
+                <td>测序次数</td>
+                <td>图表中名字</td>
+            </thead>
+            <tbody id="tbody">
+
+            </tbody>
+        </table>
+    </div> <!-- end table-->
+    <hr>
+    <button class=" btn btn-primary" type="submit" id="submit" name="submit">提交数据</button>
+
+</form>
+
+{% endblock %}

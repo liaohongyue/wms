@@ -1,0 +1,2 @@
+FLASK_APP=wms
+FLASK_ENV=development

@@ -1,0 +1,10 @@
+
+# pipfile
+Pipfile
+PipFile.lock
+
+# vscod file
+/.vscode
+
+# python file
+test.py

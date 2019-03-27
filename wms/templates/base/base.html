@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    {% block title %}
+        <title>base title</title>
+    {% endblock %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}">
+    <script src="{{ url_for('static', filename='bootstrap/js/jquery-3.3.1.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='bootstrap/js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='bootstrap/js/popper.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/admin.js') }}"></script>
+    
+    {% block addHead %}
+    {% endblock %}
+    
+
+</head>
+
+<body data-firstnav="lognav"   data-secondnav="samplesInfo">
+
+    {% block nav %}
+    <nav class="navbar navbar-expand-md bg-dark navbar-dark" id='nav'>
+        <!-- Brand -->
+        <a class="navbar-brand" href="{{ url_for('index.index') }}">Amogene</a>
+
+        <!-- Toggler/collapsibe Button -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Navbar links -->
+        <div class="collapse navbar-collapse justify-content-between " id="collapsibleNavbar">
+
+
+            <ul class="navbar-nav p-2 nav-pills">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('client.clientlist') }}" id="projectnav">项目</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('user.userList') }}" id="usernav">用户</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" id="mailnav" >邮件</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" id="lognav">日志</a>
+                </li>
+            </ul>
+
+            <ul class=" navbar-nav p-2 ">
+                <li class=" nav-item">
+                    <a class=" nav-link" href="{{ url_for('index.login') }}">登录</a></li>
+                <li class=" nav-item">
+                    <a class=" nav-link" href="{{ url_for('index.logout') }}">退出</a> </li>
+            </ul>
+
+        </div>
+    </nav>
+    {% endblock %}
+
+    <div class=" container-fluid">
+        {% block container %}
+        {% endblock %}
+    </div>
+
+    {% block addFooter %}
+    {% endblock %}
+</body>
+
+</html>
