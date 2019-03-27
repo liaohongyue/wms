@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../../static/bootstrap/css/bootstrap.min.css">
+    <script src="../../../static/bootstrap/js/jquery-3.3.1.min.js"></script>
+    <script src="../../../static/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../../../static/bootstrap/js/popper.min.js"></script>
+
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-md bg-dark navbar-dark">
+        <!-- Brand -->
+        <a class="navbar-brand" href="#">Amogene</a>
+
+        <!-- Toggler/collapsibe Button -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Navbar links -->
+        <div class="collapse navbar-collapse justify-content-between " id="collapsibleNavbar">
+
+
+            <ul class="navbar-nav p-2">
+                <li class="nav-item">
+                    <a class="nav-link" href="http://127.0.0.1:5500/html/admin/project/clientInfo/list.html">项目</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="http://127.0.0.1:5500/html/admin/user/list.html">用户</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">邮件</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">日志</a>
+                </li>
+            </ul>
+
+            <ul class=" navbar-nav p-2 ">
+                <li class=" nav-item">
+                    <a class=" nav-link" href="#">登录</a></li>
+                <li class=" nav-item">
+                    <a class=" nav-link" href="#">退出</a> </li>
+            </ul>
+
+        </div>
+    </nav>
+
+    <div class=" container-fluid">
+        <div class=" row">
+            <div class=" col-1">
+                <div>
+                    <ul class=" nav  nav-pills">
+                        <li class=" nav-item">
+                            <a class=" nav-link"
+                                href="http://127.0.0.1:5500/html/admin/project/clientInfo/list.html">客户信息</a>
+                        </li>
+                        <li class=" nav-item">
+                            <a class=" nav-link"
+                                href="http://127.0.0.1:5500/html/admin/project/projectInfo/list.html">项目信息</a>
+                        </li>
+                        <li class=" nav-item">
+                            <a class=" nav-link" href="#">分析信息</a>
+                        </li>
+                        <li class=" nav-item">
+                            <a class=" nav-link active"
+                                href="http://127.0.0.1:5500/html/admin/project/samplesInfo/list.html#">样品信息</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class=" col-11">
+                <div class=" ">
+                    <ol class=" breadcrumb">
+                        <li class=" breadcrumb-item"><a href="#">药学院</a></li>
+                        <li class=" breadcrumb-item"><a href="#">张三</a></li>
+                        <li class=" breadcrumb-item"><a href="#">AM20190124-01</a></li>
+                    </ol>
+                </div>
+                <hr>
+                <div>
+                    <h3>样品信息</h3>
+                    <div class="">
+                        <form class=" form-inline" action="">
+                            <label class=" text-info" for="">过滤条件：</label>
+                            <input class=" form-control" type="text" placeholder="爱默基因号">
+                            <input class=" form-control" type="text" placeholder="建库类型">
+                            <input class=" form-control" type="text" placeholder="样本类型">
+                            <input class=" form-control" type="text" placeholder="物种">
+                            <input class=" form-control" type="text" placeholder="测序次数">
+                            <button class=" btn btn-info">搜索</button>
+                        </form>
+                    </div>
+                    <table class=" table table-hover">
+                        <thead class=" table-info rounded" id="thead">
+                            <tr>
+                                <td>爱默基因编号</td>
+                                <td>建库类型</td>
+                                <td>测序类型</td>
+                                <td>样本类型</td>
+                                <td>物种类型</td>
+                                <td>测序量</td>
+                                <td>index编号</td>
+                                <td>index正向序列</td>
+                                <td>RNA提取情况</td>
+                                <td>测序次数</td>
+                                <td>图表中名字</td>
+                                <td>操作</td>
+                            </tr>
+                        </thead>
+                        <tbody id="tbody">
+                            <tr>
+                                <td>S18083101</td>
+                                <td>扩增子文库</td>
+                                <td>PE(SE)150</td>
+                                <td>组织</td>
+                                <td>Homo_sapiens</td>
+                                <td>6G raw data</td>
+                                <td>A705</td>
+                                <td>ATCACGAC</td>
+                                <td>无降解</td>
+                                <td>首测</td>
+                                <td>C1</td>
+                                <td>
+                                        <button class="btn btn-secondary"><a href="http://127.0.0.1:5500/html/admin/project/samplesInfo/edit.html"> 编辑</a></button>
+                                    <button class="btn btn-danger">删除</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>S18083102</td>
+                                <td>扩增子文库</td>
+                                <td>PE(SE)150</td>
+                                <td>组织</td>
+                                <td>Homo_sapiens</td>
+                                <td>6G raw data</td>
+                                <td>A705</td>
+                                <td>ATCACGAC</td>
+                                <td>无降解</td>
+                                <td>首测</td>
+                                <td>C2</td>
+                                <td>
+                                        <button class="btn btn-secondary"><a href="http://127.0.0.1:5500/html/admin/project/samplesInfo/edit.html"> 编辑</a></button>
+                                    <button class="btn btn-danger">删除</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>S18083103</td>
+                                <td>扩增子文库</td>
+                                <td>PE(SE)150</td>
+                                <td>组织</td>
+                                <td>Homo_sapiens</td>
+                                <td>6G raw data</td>
+                                <td>A705</td>
+                                <td>ATCACGAC</td>
+                                <td>无降解</td>
+                                <td>首测</td>
+                                <td>C3</td>
+                                <td>
+                                        <button class="btn btn-secondary"><a href="http://127.0.0.1:5500/html/admin/project/samplesInfo/edit.html"> 编辑</a></button>
+                                    <button class="btn btn-danger">删除</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>S18083104</td>
+                                <td>扩增子文库</td>
+                                <td>PE(SE)150</td>
+                                <td>组织</td>
+                                <td>Homo_sapiens</td>
+                                <td>6G raw data</td>
+                                <td>A705</td>
+                                <td>ATCACGAC</td>
+                                <td>无降解</td>
+                                <td>首测</td>
+                                <td>T1</td>
+                                <td>
+                                        <button class="btn btn-secondary"><a href="http://127.0.0.1:5500/html/admin/project/samplesInfo/edit.html"> 编辑</a></button>
+                                    <button class="btn btn-danger">删除</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>S18083105</td>
+                                <td>扩增子文库</td>
+                                <td>PE(SE)150</td>
+                                <td>组织</td>
+                                <td>Homo_sapiens</td>
+                                <td>6G raw data</td>
+                                <td>A705</td>
+                                <td>ATCACGAC</td>
+                                <td>无降解</td>
+                                <td>首测</td>
+                                <td>T2</td>
+                                <td>
+                                    <button class="btn btn-secondary"><a href="http://127.0.0.1:5500/html/admin/project/samplesInfo/edit.html"> 编辑</a></button>
+                                    <button class="btn btn-danger">删除</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>S18083106</td>
+                                <td>扩增子文库</td>
+                                <td>PE(SE)150</td>
+                                <td>组织</td>
+                                <td>Homo_sapiens</td>
+                                <td>6G raw data</td>
+                                <td>A705</td>
+                                <td>ATCACGAC</td>
+                                <td>无降解</td>
+                                <td>首测</td>
+                                <td>T3</td>
+                                <td>
+                                    <button class="btn btn-secondary"><a href="http://127.0.0.1:5500/html/admin/project/samplesInfo/edit.html"> 编辑</a></button>
+                                    <button class="btn btn-danger">删除</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div><!-- end sample info-->
+                <hr>
+                <div class=" d-flex  justify-content-center">
+                    <ul class="pagination">
+                        <li class="page-item"><a class="page-link" href="#">上一页</a></li>
+                        <li class="page-item"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item"><a class="page-link" href="#">4</a></li>
+                        <li class="page-item"><a class="page-link" href="#">5</a></li>
+                        <li class="page-item"><a class="page-link" href="#">6</a></li>
+                        <li class="page-item"><a class="page-link" href="#">下一页</a></li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</body>
+
+</html>

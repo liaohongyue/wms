@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../static/bootstrap/css/bootstrap.min.css">
+    <script src="../../static/bootstrap/js/jquery-3.3.1.min.js"></script>
+    <script src="../../static/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../../static/bootstrap/js/popper.min.js"></script>
+
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-md bg-dark navbar-dark">
+        <!-- Brand -->
+        <a class="navbar-brand" href="#">Amogene</a>
+
+        <!-- Toggler/collapsibe Button -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Navbar links -->
+        <div class="collapse navbar-collapse justify-content-between " id="collapsibleNavbar">
+
+
+            <ul class="navbar-nav p-2">
+                <li class="nav-item">
+                    <a class="nav-link" href="http://127.0.0.1:5500/html/admin/project/clientInfo/list.html">项目</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="http://127.0.0.1:5500/html/admin/user/list.html">用户</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">邮件</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">日志</a>
+                </li>
+            </ul>
+
+            <ul class=" navbar-nav p-2 ">
+                <li class=" nav-item">
+                    <a class=" nav-link" href="#">登录</a></li>
+                <li class=" nav-item">
+                    <a class=" nav-link" href="#">退出</a> </li>
+            </ul>
+
+        </div>
+    </nav>
+
+    <div class=" container">
+        <div class="row">
+
+
+            <div class=" col-2">
+                <div>
+                    <ul class=" nav nav-pills ">
+                        <li class=" nav-item">
+                            <a class=" nav-link active" href="#">用户列表</a>
+                        </li>
+                        <li class=" nav-item">
+                            <a class=" nav-link" href="#">修改权限</a>
+                        </li>
+                    </ul>
+                </div>
+
+            </div><!-- end col-2 -->
+            <div class=" col-10">
+                <hr>
+                <div>
+                    <button class="btn btn-info" data-target="#addUser" data-toggle="collapse">添加用户</button>
+                    <div class=" collapse" id='addUser'>
+                        <form action="">
+                            <div class=" form-group">
+                                <label for="">用户名</label>
+                                <input class=" form-control" type="text" name="" id="">
+                            </div>
+                            <div>
+                                <label for="">性别：</label>
+                                <label class=" radio-inline" for="">
+                                    <input type="radio" name="" id="" checked>男
+                                </label>
+                                <label class=" radio-inline" for="">
+                                    <input type="radio" name="" id="">女
+                                </label>
+                            </div>
+                            <div class=" form-group">
+                                <label for="">单位</label>
+                                <input class=" form-control" type="text" name="" id="">
+                            </div>
+                            <div class=" form-group">
+                                <label for="">电子邮箱:</label>
+                                <input class=" form-control" type="email" name="" id="">
+                            </div>
+                            <div class=" form-group">
+                                <label for="">单位</label>
+                                <input class=" form-control" type="text" name="" id="">
+                            </div>
+                            <div class=" form-group">
+                                <label for="">密码</label>
+                                <input class=" form-control" type="password" name="" id="">
+                            </div>
+                            <div class=" form-group">
+                                <label for="">确认密码</label>
+                                <input class=" form-control" type="password" name="" id="">
+                            </div>
+                            <button class="btn btn-primary">提交数据</button>
+                        </form>
+                    </div>
+                </div>
+                <hr>
+                <h3>用户列表</h3>
+                <div>
+                    <table class="table table-hover">
+                        <thead class=" table-info">
+                            <td>用户名</td>
+                            <td>性别</td>
+                            <td>电话</td>
+                            <td>电子邮箱</td>
+                            <td>单位</td>
+                            <td>操作</td>
+                            <td>修改密码</td>
+
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>张三</td>
+                                <td>男</td>
+                                <td>1234567891</td>
+                                <td>12345678@qq.com</td>
+                                <td>药学院</td>
+                                <td>
+                                    <a class="btn btn-secondary" href="http://127.0.0.1:5500/html/admin/user/edit.html">编辑</a>
+                                    <button class="btn btn-danger">删除</button>
+                                </td>
+                                <td>
+                                    <a class=" text-danger" href="http://127.0.0.1:5500/html/admin/user/editpassword.html">修改密码</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>张三</td>
+                                <td>男</td>
+                                <td>1234567891</td>
+                                <td>12345678@qq.com</td>
+                                <td>药学院</td>
+                                <td>
+                                    <a class="btn btn-secondary" href="http://127.0.0.1:5500/html/admin/user/edit.html">编辑</a>
+                                    <button class="btn btn-danger">删除</button>
+                                </td>
+                                <td>
+                                    <a class=" text-danger" href="http://127.0.0.1:5500/html/admin/user/editpassword.html">修改密码</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>张三</td>
+                                <td>男</td>
+                                <td>1234567891</td>
+                                <td>12345678@qq.com</td>
+                                <td>药学院</td>
+                                <td>
+                                    <a class="btn btn-secondary" href="http://127.0.0.1:5500/html/admin/user/edit.html">编辑</a>
+                                    <button class="btn btn-danger">删除</button>
+                                </td>
+                                <td>
+                                    <a class=" text-danger" href="http://127.0.0.1:5500/html/admin/user/editpassword.html">修改密码</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <hr>
+                <div class=" d-flex  justify-content-center">
+                    <ul class="pagination">
+                        <li class="page-item"><a class="page-link" href="#">上一页</a></li>
+                        <li class="page-item"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item"><a class="page-link" href="#">4</a></li>
+                        <li class="page-item"><a class="page-link" href="#">5</a></li>
+                        <li class="page-item"><a class="page-link" href="#">6</a></li>
+                        <li class="page-item"><a class="page-link" href="#">下一页</a></li>
+                    </ul>
+
+                </div>
+
+            </div> <!-- end col-10-->
+
+        </div>
+        <!--end row-->
+
+    </div>
+
+
+</body>
+
+</html>

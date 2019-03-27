@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="static/bootstrap/js/jquery-3.3.1.min.js"></script>
+    <style>
+        #checkData {
+            margin: 0 0 0 52px;
+            padding: 5px;
+            display: inline-block;
+            background-color: #3A9668;
+            color: #f1f1f1;
+            border: 1px solid #005;
+            border-radius: 4px;
+        }
+
+        #checkData:hover {
+            cursor: pointer;
+        }
+    </style>
+    <script>
+        $(function () {
+            $("#checkData").click(function () {
+                $number = $("#number").val();
+                $tablestart = '<input type="hidden" name="diffCount" value="' + $number + '">' +
+                    '<table border="">\n' +
+                    '                <tr>\n' +
+                    '                    <td>爱默基因编号</td>\n' +
+                    '                    <td>样品名</td>\n' +
+                    '                    <td>物种名</td>\n' +
+                    '                    <td>index编号</td>\n' +
+                    '                    <td>index正向序列</td>\n' +
+                    '                    <td>建库类型</td>\n' +
+                    '                    <td>测序深度</td>\n' +
+                    '                </tr>';
+
+                $node = $("#thesamples").val();
+                $string = $node.split('\n');
+                for ($i in $string) {
+                    $line = $string[$i];
+                    $sample = $line.split('\t');
+                    $amogeneNo = $sample[0];
+                    if ($amogeneNo == "") continue;
+                    $Sname = $sample[1];
+                    $species = $sample[2];
+                    $indexID = $sample[3];
+                    $indexPosSeq = $sample[4];
+                    $libType = $sample[5];
+                    $amountSeq = $sample[6];
+                    $tr = '<tr>\n' +
+                        ' <td>' + $amogeneNo + '</td>\n' +
+                        ' <td>' + $Sname + '</td>\n' +
+                        ' <td>' + $species + '</td>\n' +
+                        ' <td>' + $indexID + '</td>\n' +
+                        ' <td>' + $indexPosSeq + '</td>\n' +
+                        '  <td>' + $libType + '</td>\n' +
+                        '  <td>' + $amountSeq + '</td>\n' +
+                        '  </tr>';
+                    $tablestart = $tablestart + $tr;
+                    //$("#checkData").before($tr);
+                }
+                $tablestart = $tablestart + '</table>';
+                $("#checkData").before($tablestart);
+                // 已经填好表格
+
+                for ($i = $number; $i > 0; $i--) {
+                    //$node = $("#thesamples").val();
+                    $string = $node.split('\n');
+                    $divStr = '';
+                    $divStart = '<div align="center" style="float: left">\n' +
+                        '<span style="margin: 70px">第 ' + $i + '  组</span>\n' +
+                        '<div style="float: left">\n' +
+                        '<span>对照组</span>';
+                    $divMid = ' </div>\n' +
+                        '<div style="margin-left: 20px; clear: right ;margin-left: 30px">\n' +
+                        '<span>实验组</span>';
+                    $divEnd = '</div></div>';
+                    $insert1 = '';
+                    $insert2 = '';
+
+                    for ($j in $string) {
+                        $line = $string[$j];
+                        $sample = $line.split('\t');
+                        $amogeneNo = $sample[0];
+                        if ($amogeneNo == "") continue;
+                        $insert1 = $insert1 + '<br>' +
+                            '<input type="checkbox" name="name-ref-' + $i + '-' + $sample[1] + '" value="' + $sample[1] + '">' +
+                            '<label>' + $sample[1] + '</label>';
+                        $insert2 = $insert2 + '<br>' +
+                            '<input type="checkbox" name="name-con-' + $i + '-' + $sample[1] + '" value="' + $sample[1] + '">' +
+                            '<label>' + $sample[1] + '</label>';
+                    }
+                    $divStr = $divStart + $insert1 + $divMid + $insert2 + $divEnd;
+                    $("#checkData").before($divStr);
+                }
+            });
+        });
+
+    </script>
+
+</head>
+<body>
+<form name="putProject" method="post" action="{% url 'putProject' %}">
+
+    <div align="center">
+        合同编号：<input type="text" name="contractNo" value=""><br>
+        合同名称：<input type="text" name="contractNoName" value=""><br>
+    </div>
+
+    <div align="center">
+        <label>样品表</label><br>
+        <table>输入格式（Tab分隔）：爱默基因编号 样品名 物种名 index编号 index正向序列 建库类型 测序深度</table>
+        <textarea rows="12" cols="150" name="samples" id="thesamples"></textarea><br>
+        <input type="hidden" name="sub" value="pushSample">
+        分析组数：<input type="number" name="diffNumber" value="1" id="number">
+        {#        <input type="submit" value="提交">#}
+        <span id="checkData">验证</span>
+        <hr>
+        <input type="hidden" name="clientId" value="{{ clientId }}">
+        <input type="radio" name="action" value="add" checked>增添<br>
+        <input type="radio" name="action" value="edit">修改<br>
+        <input type="submit" value="提交">
+
+    </div>
+</form>
+
+</body>
+</html>
