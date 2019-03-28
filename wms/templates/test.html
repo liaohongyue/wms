@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}">
+    <script src="{{ url_for('static', filename='bootstrap/js/jquery-3.3.1.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='bootstrap/js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='bootstrap/js/popper.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/admin.js') }}"></script>
+
+</head>
+
+<body>
+   
+    <form action="{{ url_for('index.basic') }}" method="POST" enctype="multipart/form-data" >
+
+        {{ form.csrf_token }}
+        <div class='form-group'>
+
+            <div class="btn-group" >
+                {{ form.filename.label }}
+                {{ form.filename }}
+            </div>
+
+            {{ form.username.label }} <br>
+            {{ form.username(class='form-control') }} <br>
+        </div>
+        <div class='from-group'>
+            {{ form.password.label }} <br>
+            {{ form.password(class='form-control') }} <br>
+        </div>
+        <div class='form-check'>
+            {{ form.remember(class='form-check-input') }} 
+            {{ form.remember.label }}
+        </div>
+
+        {{ form.submit(class='btn btn-primary') }} <br>
+    </form>
+
+</body>
+
+</html>

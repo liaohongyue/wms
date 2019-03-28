@@ -1,20 +1,43 @@
-from flask import Blueprint
+from flask import Blueprint, request ,flash
 from flask import render_template, redirect, url_for
+from wms.forms.index import LoginForm
 
-home_bp = Blueprint('index',__name__)
+
+home_bp = Blueprint('index', __name__)
+
 
 @home_bp.route('/')
-def index():
-    print(url_for('index.login'))
+def index():    
     return redirect(url_for('index.login'))
+
 
 @home_bp.route('/test')
 def test():
-    return render_template('base/projectBase.html')
+    form = LoginForm()
+    return render_template('test.html', form=form)
 
-@home_bp.route('/login')
+
+@home_bp.route('/basic', methods=['GET', 'POST'])
+def basic():
+    form = LoginForm()
+    if request.method == 'POST' and form.validate():
+        f = form.filename.data
+        username = f.filename
+        print(username)
+        f.save(username)
+        return render_template('message.html',message= username)
+    message = form.password.errors
+    return render_template('message.html',message=message)
+
+
+@home_bp.route('/login',methods=['GET','POST'])
 def login():
-    return render_template('login.html')
+    form = LoginForm()
+    if request.method == 'POST' and form.validate():
+        if form.userName.data == "admin" and form.passWord.data == 'admin' :
+            return redirect(url_for('client.clientlist'))
+    return render_template('login.html', form = form )
+
 
 @home_bp.route('/logout')
 def logout():

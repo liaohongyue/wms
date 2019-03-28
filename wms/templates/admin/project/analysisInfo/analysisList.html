@@ -206,16 +206,17 @@
     </div>
     <hr>
     <div>
-        <form class=" form-inline" action="">
-            <label for="">参照组组名：</label>
-            <input class=" form-control" type="text" name="" id="">
-            <label for="">参考组样本：</label>
-            <input class=" form-control" type="text" name="" id="">
-            <label for="">对照组组名：</label>
-            <input class=" form-control" type="text" name="" id="">
-            <label for="">对照组样本：</label>
-            <input class=" form-control" type="text" name="" id="">
-            <button class="btn btn-primary" type="submit">添加</button>
+        <form class=" form-inline" action="{{ url_for('analysis.analysisList') }}" method="POST">
+            {{ form.csrf_token }}
+            {{ form.cGroupName.label }}
+            {{ form.cGroupName(class='form-control') }}
+            {{ form.cSamples.label }}
+            {{ form.cSamples(class="form-control") }}
+            {{ form.eGroupName.label }}
+            {{ form.eGroupName(class='form-control') }}
+            {{ form.eSamples.label }}
+            {{ form.eSamples(class="form-control") }}
+            {{ form.submit(class="btn btn-info") }}
         </form>
     </div>
 

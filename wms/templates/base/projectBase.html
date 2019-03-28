@@ -13,7 +13,7 @@
                     <a class=" nav-link" href="{{ url_for('project.projectList') }}" id="projectInfo">项目信息</a>
                 </li>
                 <li class=" nav-item">
-                    <a class=" nav-link" href="#" id="analysisInfo" >分析信息</a>
+                    <a class=" nav-link" href="#" id="analysisInfo">分析信息</a>
                 </li>
                 <li class=" nav-item">
                     <a class=" nav-link" href="{{ url_for('samples.samplesList') }}" id="samplesInfo">样品信息</a>
@@ -26,6 +26,13 @@
     </div>
 
     <div class=" col-11">
+        {% if mess != '' %}
+        <div class="alert alert-danger">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong>{{ mess }}</strong>
+        </div>
+        {% endif %}
+        
         {% block rightContent %}
         {% endblock %}
 

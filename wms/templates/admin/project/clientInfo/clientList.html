@@ -1,162 +1,162 @@
 {% extends "base/projectBase.html" %}
 
 {% block title %}
-    <title>客户信息</title>
+<title>客户信息</title>
 {% endblock %}
 
 {% block rightContent %}
 <div>
-        <hr>
+    <hr>
+    <form action="{{ url_for('client.clientAdd') }}" method="POST">
         <div name="addClient">
-            <button type="button" class="btn btn-primary" data-toggle="collapse"
-                data-target="#demo">添加客户</button>
+            <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#demo">添加客户</button>
+
             <div id="demo" class="collapse">
                 <form action="">
+                    {{ form.csrf_token }}
+                    <div class=" form-group">
+                        {{ form.userName.label }}
+                        {{ form.userName(class='form-control') }}
+                    </div>
 
-                    <div class=" form-group">
-                        <label for="">姓名</label>
-                        <input class=" form-control" type="text">
-                    </div>
-                    <div>
-                        <label for="">性别</label>
-                        <div class=" radio form-control">
-                            <label class="radio-inline" for="">
-                                <input type="radio" name="gender" checked>男
-                            </label>
+                    <div class=" radio radio-inline">
+                        {{ form.gender.label }}
+                        {{ form.gender }}
 
-                            <label class="radio-inline" for="">
-                                <input type="radio" name="gender">女
-                            </label>
-                        </div>
                     </div>
                     <div class=" form-group">
-                        <label for="">单位</label>
-                        <input class=" form-control" type="text">
+                        {{ form.organization.label }}
+                        {{ form.organization(class='form-control') }}
                     </div>
                     <div class=" form-group">
-                        <label for="">电话</label>
-                        <input class=" form-control" type="text">
+                        {{ form.telephone.label }}
+                        {{ form.telephone(class='form-control') }}
                     </div>
                     <div class=" form-group">
-                        <label for="">电子邮箱</label>
-                        <input class=" form-control" type="text">
+                        {{ form.email.label }}
+                        {{ form.email(class='form-control') }}
                     </div>
                     <div class=" form-group">
-                        <label for="">通讯地址</label>
-                        <input class=" form-control" type="text">
+                        {{ form.address.label }}
+                        {{ form.address(class='form-control') }}
                     </div>
                     <div class=" form-group">
-                        <label for="">备注信息</label>
-                        <input class=" form-control" type="text">
+                        {{ form.remark.label }}
+                        {{ form.remark(class='form-control') }}
                     </div>
-                    <button class=" btn btn-primary" type="submit">确认添加</button>
+                    <!-- <button class=" btn btn-primary" type="submit">确认添加</button> -->
+                    {{ form.submit(class='btn btn-primary') }}
                 </form>
 
             </div>
-
-
         </div>
-        <hr>
-        <div class="">
-            <form class=" form-inline" action="">
-                <label class=" text-info" for="">过滤条件：</label>
-                <input class=" form-control" type="text" placeholder="姓名">
-                <input class=" form-control" type="text" placeholder="单位">
-                <input class=" form-control" type="text" placeholder="电话">
-                <input class=" form-control" type="text" placeholder="电子邮箱">
-                <input class=" form-control" type="text" placeholder="通讯地址">
-                <button class=" btn btn-info">搜索</button>
-            </form>
-        </div>
-        <hr>
-        <form action="">
-            <table class=" table  table-hover">
-                <thead class="  table-info rounded">
-                    <tr>
-                        <td>姓名</td>
-                        <td>性别</td>
-                        <td>单位</td>
-                        <td>电话</td>
-                        <td>电子邮箱</td>
-                        <td>通讯地址</td>
-                        <td>相关项目</td>
-                        <td>备注信息</td>
-                        <td>操作</td>
-                    </tr>
-                </thead>
-                <tbody class="">
-                    <tr>
-                        <td>张三</td>
-                        <td>男</td>
-                        <td>药学院</td>
-                        <td>1234567890</td>
-                        <td>123456789@163.com</td>
-                        <td>厦门市翔安区厦门大学翔安校区药学院</td>
-                        <td><a href="{{ url_for('project.projectList') }}">查看</a></td>
-                        <td>备注信息</td>
-                        <td>
-                            <div class=" btn-group">
-                                <span class=" btn btn-secondary"  ><a class=" text-white" href="{{ url_for('client.clientEdit') }}"> 编辑</a></span>
-                                <button class=" btn btn-danger">删除</button>
-                            </div>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>李四</td>
-                        <td>男</td>
-                        <td>生科院</td>
-                        <td>22222222222</td>
-                        <td>6666666@163.com</td>
-                        <td>厦门市翔安区厦门大学翔安校区生科院</td>
-                        <td><a href="{{ url_for('project.projectList') }}">查看</a></td>
-                        <td>备注信息</td>
-                        <td>
-                            <div class=" btn-group">
-                                <span class=" btn btn-secondary"><a class=" text-white"  href="{{ url_for('client.clientEdit') }}"> 编辑</a></span>
-                                <button class=" btn btn-danger">删除</button>
-                            </div>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>王五</td>
-                        <td>女</td>
-                        <td>医学院</td>
-                        <td>1234567890</td>
-                        <td>123456789@163.com</td>
-                        <td>厦门市翔安区厦门大学翔安校区药学院</td>
-                        <td><a href="{{ url_for('project.projectList') }}">查看</a></td>
-                        <td>备注信息</td>
-                        <td>
-                            <div class=" btn-group">
-                                <span class=" btn btn-secondary"><a class=" text-white"  href="{{ url_for('client.clientEdit') }}"> 编辑</a></span>
-                                <button class=" btn btn-danger">删除</button>
-                            </div>
-                        </td>
-                    </tr>
-
-
-                </tbody>
-
-            </table>
-
-        </form>
-    </div>
+    </form>
 
     <hr>
-
-    <div class=" d-flex  justify-content-center">
-        <ul class="pagination">
-            <li class="page-item"><a class="page-link" href="#">上一页</a></li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item"><a class="page-link" href="#">4</a></li>
-            <li class="page-item"><a class="page-link" href="#">5</a></li>
-            <li class="page-item"><a class="page-link" href="#">6</a></li>
-            <li class="page-item"><a class="page-link" href="#">下一页</a></li>
-        </ul>
+    <div class="">
+        <form class=" form-inline" action="{{ url_for('client.clientQuery') }}" method="POST">
+            {{ formq.csrf_token }}
+            <label class=" text-info" for="">过滤条件：</label>
+            {{ formq.userName(class='form-control') }}
+            {{ formq.organization(class='form-control') }}
+            {{ formq.telephone(class='form-control') }}
+            {{ formq.email(class='form-control') }}
+            {{ formq.address(class='form-control') }}
+            {{ formq.submit(class='btn btn-info') }}
+        </form>
     </div>
-    
+    <hr>
+    <form action="">
+        <table class=" table  table-hover">
+            <thead class="  table-info rounded">
+                <tr>
+                    <td>姓名</td>
+                    <td>性别</td>
+                    <td>单位</td>
+                    <td>电话</td>
+                    <td>电子邮箱</td>
+                    <td>通讯地址</td>
+                    <td>相关项目</td>
+                    <td>备注信息</td>
+                    <td>操作</td>
+                </tr>
+            </thead>
+            <tbody class="">
+                <tr>
+                    <td>张三</td>
+                    <td>男</td>
+                    <td>药学院</td>
+                    <td>1234567890</td>
+                    <td>123456789@163.com</td>
+                    <td>厦门市翔安区厦门大学翔安校区药学院</td>
+                    <td><a href="{{ url_for('project.projectList') }}">查看</a></td>
+                    <td>备注信息</td>
+                    <td>
+                        <div class=" btn-group">
+                            <span class=" btn btn-secondary"><a class=" text-white"
+                                    href="{{ url_for('client.clientEdit') }}"> 编辑</a></span>
+                            <button class=" btn btn-danger">删除</button>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>李四</td>
+                    <td>男</td>
+                    <td>生科院</td>
+                    <td>22222222222</td>
+                    <td>6666666@163.com</td>
+                    <td>厦门市翔安区厦门大学翔安校区生科院</td>
+                    <td><a href="{{ url_for('project.projectList') }}">查看</a></td>
+                    <td>备注信息</td>
+                    <td>
+                        <div class=" btn-group">
+                            <span class=" btn btn-secondary"><a class=" text-white"
+                                    href="{{ url_for('client.clientEdit') }}"> 编辑</a></span>
+                            <button class=" btn btn-danger">删除</button>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>王五</td>
+                    <td>女</td>
+                    <td>医学院</td>
+                    <td>1234567890</td>
+                    <td>123456789@163.com</td>
+                    <td>厦门市翔安区厦门大学翔安校区药学院</td>
+                    <td><a href="{{ url_for('project.projectList') }}">查看</a></td>
+                    <td>备注信息</td>
+                    <td>
+                        <div class=" btn-group">
+                            <span class=" btn btn-secondary"><a class=" text-white"
+                                    href="{{ url_for('client.clientEdit') }}"> 编辑</a></span>
+                            <button class=" btn btn-danger">删除</button>
+                        </div>
+                    </td>
+                </tr>
+
+
+            </tbody>
+
+        </table>
+
+    </form>
+</div>
+
+<hr>
+
+<div class=" d-flex  justify-content-center">
+    <ul class="pagination">
+        <li class="page-item"><a class="page-link" href="#">上一页</a></li>
+        <li class="page-item"><a class="page-link" href="#">1</a></li>
+        <li class="page-item"><a class="page-link" href="#">2</a></li>
+        <li class="page-item"><a class="page-link" href="#">3</a></li>
+        <li class="page-item"><a class="page-link" href="#">4</a></li>
+        <li class="page-item"><a class="page-link" href="#">5</a></li>
+        <li class="page-item"><a class="page-link" href="#">6</a></li>
+        <li class="page-item"><a class="page-link" href="#">下一页</a></li>
+    </ul>
+</div>
+
 {% endblock %}

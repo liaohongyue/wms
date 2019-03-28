@@ -19,7 +19,7 @@
 
 </head>
 
-<body data-firstnav="lognav"   data-secondnav="samplesInfo">
+<body {% if firstNav != '' %}  data-firstnav="{{ firstnav }}" {% endif %} {% if secondnav != '' %}  data-secondnav="{{ secondnav }}" {% endif %}>
 
     {% block nav %}
     <nav class="navbar navbar-expand-md bg-dark navbar-dark" id='nav'>

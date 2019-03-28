@@ -21,10 +21,11 @@
 
     <hr>
     <div>
-        <form class=" form-inline" action="">
-            <label for="">筛选条件：</label>
-            <input class=" form-control" type="text" placeholder="项目编号">
-            <button class=" btn btn-info">搜索</button>
+        <form class=" form-inline" action="{{ url_for('project.projectList')  }}">
+            {{ form.csrf_token }}
+            {{ form.itemNumber.label }}
+            {{ form.itemNumber(class='form-control') }}
+            {{ form.submit(class='btn btn-info') }}
         </form>
     </div>
     <hr>
