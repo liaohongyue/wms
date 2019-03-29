@@ -1,58 +1,60 @@
 {% extends "base/projectBase.html" %}
 
-{% block title %}
-    <title>编辑样品信息</title>
-{% endblock %}
 
 {% block rightContent %}
 
-<form action="">
+<form action="{{ url_for('samples.samplesEdit') }}" method="POST">
+    {{ form.csrf_token }}
 
-        <div class=" form-group">
-            <label for="">爱默基因编号</label>
-            <input class=" form-control" type="text">
-        </div>
-        <div class=" form-group">
-            <label for="">建库类型</label>
-            <input class=" form-control" type="text">
-        </div>
-        <div class=" form-group">
-            <label for="">测序类型</label>
-            <input class=" form-control" type="text">
-        </div>
-        <div class=" form-group">
-            <label for="">样本类型</label>
-            <input class=" form-control" type="text">
-        </div>
-        <div class=" form-group">
-            <label for="">物种类型</label>
-            <input class=" form-control" type="text">
-        </div>
-        <div class=" form-group">
-            <label for="">测序量</label>
-            <input class=" form-control" type="text">
-        </div>
-        <div class=" form-group">
-            <label for="">index编号</label>
-            <input class=" form-control" type="text">
-        </div>
-        <div class=" form-group">
-            <label for="">index正向序列</label>
-            <input class=" form-control" type="text">
-        </div>
-        <div class=" form-group">
-            <label for="">RNA提取情况</label>
-            <input class=" form-control" type="text">
-        </div>
-        <div class=" form-group">
-            <label for="">测序次数</label>
-            <input class=" form-control" type="text">
-        </div>
-        <div class=" form-group">
-            <label for="">图表中名字</label>
-            <input class=" form-control" type="text">
-        </div>
-        <button type="submit" class="btn btn-primary">确认修改</button>
-    </form>
+    <div class=" form-group">
+        {{ form.amogeneItem.label }}
+        {{ form.amogeneItem(class="form-control") }}
+    </div>
+    <div class=" form-group">
+        {{ form.libraryType.label }}
+        {{ form.libraryType(class="form-control") }}
+    </div>
+    <div class=" form-group">
+        {{ form.seqType.label }}
+        {{ form.seqType(class="form-control") }}
+    </div>
+    <div class=" form-group">
+        {{ form.sampleType.label }}
+        {{ form.sampleType(class="form-control") }}
+    </div>
+    <div class=" form-group">
+        {{ form.species.label }}
+        {{ form.species(class="form-control") }}
+    </div>
+    <div class=" form-group">
+        {{ form.seqDose.label }}
+        {{ form.seqDose(class="form-control") }}
+    </div>
+    <div class=" form-group">
+        {{ form.indexItem.label }}
+        {{ form.indexItem(class="form-control") }}
+    </div>
+    <div class=" form-group">
+        {{ form.indexForward.label }}
+        {{ form.indexForward(class="form-control") }}
+    </div>
+    <div class=" form-group">
+        {{ form.extractStatus.label }}
+        {{ form.extractStatus(class="form-control") }}
+    </div>
+    <div class=" form-group">
+        {{ form.seqTimes.label }}
+        {{ form.seqTimes(class="form-control") }}
+    </div>
+    <div class=" form-group">
+        {{ form.chartName.label }}
+        {{ form.chartName(class="form-control") }}
+    </div>
+    <div class=" form-group">
+        {{ form.remark.label }}
+        {{ form.remark(class="form-control") }}
+    </div>
+    {{ form.submit(class='btn btn-primary') }}
+</form>
 
 {%  endblock %}

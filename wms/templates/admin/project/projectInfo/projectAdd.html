@@ -77,6 +77,10 @@
 
 
 <script type="">
+    $(document).ready(function(){
+        $("#SamplesArea").text('');
+    }
+    );
     $(function () {
                 $("#checkData").click(function () {
                     $tableBody = ''
@@ -114,7 +118,8 @@
                         $tableBody = $tableBody + $tr;
                     }
                     $("#tbody").html($tableBody);
-                    $("#SamplesArea").attr('disabled', 'disabled');
+                    //$("#SamplesArea").attr('disabled', 'disabled');
+                    $("#SamplesArea").hide();
                     $("#checkData").hide();
                     $('#resetData').show();
                     $("#submit").show();
@@ -124,7 +129,7 @@
         
             $(function () {
                     $('#resetData').click(function () {
-                        $("#SamplesArea").val('');
+                        $("#SamplesArea").show();
                         $("#SamplesArea").removeAttr('disabled');
                         $("#tbody").empty();
                         $("#checkData").show();

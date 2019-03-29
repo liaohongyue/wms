@@ -33,10 +33,11 @@ def basic():
 @home_bp.route('/login',methods=['GET','POST'])
 def login():
     form = LoginForm()
+    pageTitle = '登录界面'
     if request.method == 'POST' and form.validate():
         if form.userName.data == "admin" and form.passWord.data == 'admin' :
             return redirect(url_for('client.clientlist'))
-    return render_template('login.html', form = form )
+    return render_template('login.html', form = form, pageTitle =pageTitle )
 
 
 @home_bp.route('/logout')
