@@ -22,7 +22,10 @@
             {{ form.csrf_token }}
             {{ form.itemNumber.label }}
             {{ form.itemNumber(class='form-control') }}
+
+            <input type="text" class="form-control" placeholder="姓名">
             {{ form.submit(class='btn btn-info') }}
+           
         </form>
     </div>
     <hr>
@@ -31,9 +34,9 @@
         <table class=" table table-hover table-bordered">
             <thead class=" table-info rounded-top ">
                 <td>项目编号</td>
-                <td>样品信息</td>
-                <td>分析信息</td>
-                <td>备注</td>
+                <td>姓名</td>
+                <td>单位</td>
+                <td>项目信息</td>
                 <td>添加时间</td>
                 <td>修改时间</td>
                 <td>查看详细</td>
