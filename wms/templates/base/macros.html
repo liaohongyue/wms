@@ -12,7 +12,7 @@
                 <li class="page-item"><a class="page-link" href="#">...</a></li>
                 {% endif %}
                 {% if page != None %}
-                <li class="page-item"><a class="page-link" href="{{ url_for(request.endpoint, page=page) }}">{{page}}</a></li>
+                    <li class="page-item  {% if pagination.page == page %} activate {% endif %} "><a class="page-link" href="{{ url_for(request.endpoint, page=page) }}">{{page}}</a></li>
                 {% endif %}
             {% endfor %}
             <li class="page-item {% if not pagination.has_next %} disabled {% endif %}">

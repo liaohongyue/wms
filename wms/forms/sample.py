@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField
+from wtforms import StringField, SubmitField,IntegerField
 from wtforms.validators import length, DataRequired
 
 class FormQuery(FlaskForm):
@@ -11,6 +11,7 @@ class FormQuery(FlaskForm):
     submit = SubmitField("搜索")
 
 class FormEidt(FlaskForm):
+    sampleId = IntegerField('id')
     amogeneItem = StringField("爱默基因编号",validators=[DataRequired()],render_kw={'placeholder':'爱默基因编号',})
     species = StringField("物种",render_kw={'placeholder':'物种',})
     libraryType =StringField("建库类型",render_kw={'placeholder':'建库类型',})

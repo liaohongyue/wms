@@ -4,129 +4,83 @@
 {% block rightContent %}
 
 <div class=" ">
-        <ol class=" breadcrumb">
-            <li class=" breadcrumb-item"><a href="#">药学院</a></li>
-            <li class=" breadcrumb-item"><a href="#">张三</a></li>
-        </ol>
-    </div>
-    <h3>项目信息</h3>
+    <ol class=" breadcrumb">
+        <li class=" breadcrumb-item"><a href="#">药学院</a></li>
+        <li class=" breadcrumb-item"><a href="#">张三</a></li>
+    </ol>
+</div>
+<h3>项目信息</h3>
 
-    <hr>
-    <div class="">
-        <a class="btn btn-info" href="{{ url_for('project.projectAdd') }}">添加项目</a>
-    </div>
+<hr>
+<div class="">
+    <a class="btn btn-info" href="{{ url_for('project.projectAdd') }}">添加项目</a>
+</div>
 
-    <hr>
-    <div>
-        <form class=" form-inline" action="{{ url_for('project.projectList')  }}">
-            {{ form.csrf_token }}
-            {{ form.itemNumber.label }}
-            {{ form.itemNumber(class='form-control') }}
+<hr>
+<div>
+    <form class=" form-inline" action="{{ url_for('project.projectList')  }}">
+        {{ form.csrf_token }}
+        {{ form.itemNumber.label }}
+        {{ form.itemNumber(class='form-control') }}
 
-            <input type="text" class="form-control" placeholder="姓名">
-            {{ form.submit(class='btn btn-info') }}
-           
-        </form>
-    </div>
-    <hr>
+        <input type="text" class="form-control" placeholder="姓名">
+        {{ form.submit(class='btn btn-info') }}
 
-    <div>
-        <table class=" table table-hover table-bordered">
-            <thead class=" table-info rounded-top ">
-                <td>项目编号</td>
-                <td>姓名</td>
-                <td>单位</td>
-                <td>项目信息</td>
-                <td>添加时间</td>
-                <td>修改时间</td>
-                <td>查看详细</td>
-                <td>操作</td>
+    </form>
+</div>
+<hr>
 
-            </thead>
-            <tbody>
-                <tr>
-                    <td>AM20190124-01</td>
-                    <td>5个样品</td>
-                    <td>4个分析</td>
-                    <td></td>
-                    <td>2018-03-25 11:23</td>
-                    <td>2018-03-25 14:23</td>
-                    <td><a href="{{ url_for('analysis.analysisList') }}">查看</a>
-                    </td>
-                    <td>
-                        <div class=" btn-group">
-                            <button class=" btn btn-secondary">编辑</button>
-                            <button class=" btn btn-danger">删除</button>
-                        </div>
-                    </td>
-                </tr>
+<div>
+    <table class=" table table-hover table-bordered">
+        <thead class=" table-info rounded-top ">
+            <td>项目编号</td>
+            <td>姓名</td>
+            <td>单位</td>
+            <td>备注信息</td>
+            <td>添加时间</td>
+            <td>修改时间</td>
+            <td>查看详细</td>
+            <td>操作</td>
 
-                <tr>
-                    <td>AM20190124-01</td>
-                    <td>5个样品</td>
-                    <td>4个分析</td>
-                    <td></td>
-                    <td>2018-03-25 11:23</td>
-                    <td>2018-03-25 14:23</td>
-                    <td><a href="{{ url_for('analysis.analysisList') }}">查看</a>
-                    </td>
-                    <td>
-                        <div class=" btn-group">
-                            <button class=" btn btn-secondary">编辑</button>
-                            <button class=" btn btn-danger">删除</button>
-                        </div>
-                    </td>
-                </tr>
+        </thead>
+        <tbody>
+            {% for project in pagination.items %}
+            <tr>
+                <td>{{ project.ItemNumber }}</td>
+                <td>5个样品</td>
+                <td>4个分析</td>
+                <td>{{ project.remark }}</td>
+                <td>2018-03-25 11:23</td>
+                <td>2018-03-25 14:23</td>
+                <td><a href="{{ url_for('analysis.analysisList') }}">查看</a>
+                </td>
+                <td>
+                    <div class=" btn-group">
+                        <a class="btn btn-secondary"
+                            href="{{ url_for('project.projectEdit') }}?id={{ project.id }}">编辑</a>
+                        <a class="btn btn-danger"
+                            href="{{ url_for('project.projectDel') }}?id={{ project.id }}">删除</a>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div><!-- end table -->
 
-                <tr>
-                    <td>AM20190124-01</td>
-                    <td>5个样品</td>
-                    <td>4个分析</td>
-                    <td></td>
-                    <td>2018-03-25 11:23</td>
-                    <td>2018-03-25 14:23</td>
-                    <td><a href="{{ url_for('analysis.analysisList') }}">查看</a>
-                    </td>
-                    <td>
-                        <div class=" btn-group">
-                            <button class=" btn btn-secondary">编辑</button>
-                            <button class=" btn btn-danger">删除</button>
-                        </div>
-                    </td>
-                </tr>
+<hr>
 
-                <tr>
-                    <td>AM20190124-01</td>
-                    <td>5个样品</td>
-                    <td>4个分析</td>
-                    <td></td>
-                    <td>2018-03-25 11:23</td>
-                    <td>2018-03-25 14:23</td>
-                    <td><a href="{{ url_for('analysis.analysisList') }}">查看</a></td>
-                    <td>
-                        <div class=" btn-group">
-                            <button class=" btn btn-secondary">编辑</button>
-                            <button class=" btn btn-danger">删除</button>
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div><!-- end table -->
-
-    <hr>
-
-    <div class=" d-flex  justify-content-center">
-        <ul class="pagination">
-            <li class="page-item"><a class="page-link" href="#">上一页</a></li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item"><a class="page-link" href="#">4</a></li>
-            <li class="page-item"><a class="page-link" href="#">5</a></li>
-            <li class="page-item"><a class="page-link" href="#">6</a></li>
-            <li class="page-item"><a class="page-link" href="#">下一页</a></li>
-        </ul>
-    </div>
+<div class=" d-flex  justify-content-center">
+    <ul class="pagination">
+        <li class="page-item"><a class="page-link" href="#">上一页</a></li>
+        <li class="page-item"><a class="page-link" href="#">1</a></li>
+        <li class="page-item"><a class="page-link" href="#">2</a></li>
+        <li class="page-item"><a class="page-link" href="#">3</a></li>
+        <li class="page-item"><a class="page-link" href="#">4</a></li>
+        <li class="page-item"><a class="page-link" href="#">5</a></li>
+        <li class="page-item"><a class="page-link" href="#">6</a></li>
+        <li class="page-item"><a class="page-link" href="#">下一页</a></li>
+    </ul>
+</div>
 
 {% endblock %}

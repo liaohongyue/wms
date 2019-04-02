@@ -5,7 +5,7 @@
 
 <form action="{{ url_for('samples.samplesEdit') }}" method="POST">
     {{ form.csrf_token }}
-
+    {{ form.sampleId(type='hidden') }}
     <div class=" form-group">
         {{ form.amogeneItem.label }}
         {{ form.amogeneItem(class="form-control") }}

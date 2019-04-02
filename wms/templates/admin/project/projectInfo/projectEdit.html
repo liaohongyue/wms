@@ -1,0 +1,18 @@
+{% extends "base/projectBase.html" %}
+
+{% block rightContent %}
+
+<h3>修改项目信息</h3>
+<hr>
+
+<form action="{{ url_for('project.projectEdit') }}" method="POST">
+    {{ form.csrf_token }}
+    {{ form.projectId(type='hidden') }}
+    {{ form.itemNumber.label }}
+    {{ form.itemNumber(class='form-control') }}
+    {{ form.remark.label }}
+    {{ form.remark(class='form-control') }}
+    {{ form.submit(class='btn btn-info') }}
+</form>
+
+{% endblock %}

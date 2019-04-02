@@ -18,6 +18,7 @@
 </div>
 <form action="{{ url_for('project.projectAdd') }}" method="POST">
     <div class="form-group">
+        {{ form.csrf_token }}
         {{ form.itemNumber.label }}
         {{ form.itemNumber(class='form-control') }}
     </div>
@@ -71,6 +72,8 @@
         </table>
     </div> <!-- end table-->
     <hr>
+    {{ form.remark(class='form-control') }}
+    <hr>
     <button class=" btn btn-primary" type="submit" id="submit" name="submit">提交数据</button>
 
 </form>
@@ -79,12 +82,15 @@
 <script type="">
     $(document).ready(function(){
         $("#SamplesArea").text('');
+        $("#remarkInfo").text('');
+        $("#remarkInfo").hide();
     }
     );
     $(function () {
                 $("#checkData").click(function () {
                     $tableBody = ''
                     $samplesArea = $("#SamplesArea").val();
+                    if($samplesArea != ''){
                     $samplesList = $samplesArea.split('\n');
                     for ($i in $samplesList) {
                         $lineData = $samplesList[$i];
@@ -123,7 +129,8 @@
                     $("#checkData").hide();
                     $('#resetData').show();
                     $("#submit").show();
-        
+                    $("#remarkInfo").show();
+                }
                 });
             });
         
@@ -134,6 +141,7 @@
                         $("#tbody").empty();
                         $("#checkData").show();
                         $('#resetData').hide();
+                        $("#remarkInfo").hide();
                     });
                 }
         

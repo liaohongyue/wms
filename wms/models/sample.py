@@ -12,5 +12,5 @@ class Sample(db.Model):
     seqTimes = db.Column(db.String(20))
     seqDose = db.Column(db.String(20))
     sampleType = db.Column(db.String(30))
-    charName = db.Column(db.String(30))
+    chartName = db.Column(db.String(30))
     remark = db.Column(db.String(200))

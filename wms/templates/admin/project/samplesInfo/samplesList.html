@@ -43,123 +43,34 @@
             </tr>
         </thead>
         <tbody id="tbody">
+            {% for sample in pagination.items %}
             <tr>
-                <td>S18083101</td>
-                <td>扩增子文库</td>
-                <td>PE(SE)150</td>
-                <td>组织</td>
-                <td>Homo_sapiens</td>
-                <td>6G raw data</td>
-                <td>A705</td>
-                <td>ATCACGAC</td>
-                <td>无降解</td>
-                <td>首测</td>
-                <td>C1</td>
+                <td>{{ sample.amogeneItem }}</td>
+                <td>{{ sample.libraryType }}</td>
+                <td>{{ sample.seqType }}</td>
+                <td>{{ sample.sampleType }}</td>
+                <td>{{ sample.species }}</td>
+                <td>{{ sample.seqDose }}</td>
+                <td>{{ sample.indexItem }}</td>
+                <td>{{ sample.indexForward }}</td>
+                <td>{{ sample.extractStatus }}</td>
+                <td>{{ sample.seqTimes }}</td>
+                <td>{{ sample.chartName }}</td>
                 <td>
-                    <button class="btn btn-secondary"><a href="{{ url_for('samples.samplesEdit') }}"> 编辑</a></button>
-                    <button class="btn btn-danger">删除</button>
+                    <div class=" btn-group">
+                        <a class="btn btn-secondary" href="{{ url_for('samples.samplesEdit') }}?id={{ sample.id }}">编辑</a>
+                        <a class="btn btn-danger" href="{{ url_for('samples.samplesDel') }}?id={{ sample.id }}">删除</a>
+                    </div>
                 </td>
             </tr>
-            <tr>
-                <td>S18083102</td>
-                <td>扩增子文库</td>
-                <td>PE(SE)150</td>
-                <td>组织</td>
-                <td>Homo_sapiens</td>
-                <td>6G raw data</td>
-                <td>A705</td>
-                <td>ATCACGAC</td>
-                <td>无降解</td>
-                <td>首测</td>
-                <td>C2</td>
-                <td>
-                    <button class="btn btn-secondary"><a href="{{ url_for('samples.samplesEdit') }}"> 编辑</a></button>
-                    <button class="btn btn-danger">删除</button>
-                </td>
-            </tr>
-            <tr>
-                <td>S18083103</td>
-                <td>扩增子文库</td>
-                <td>PE(SE)150</td>
-                <td>组织</td>
-                <td>Homo_sapiens</td>
-                <td>6G raw data</td>
-                <td>A705</td>
-                <td>ATCACGAC</td>
-                <td>无降解</td>
-                <td>首测</td>
-                <td>C3</td>
-                <td>
-                    <button class="btn btn-secondary"><a href="{{ url_for('samples.samplesEdit') }}"> 编辑</a></button>
-                    <button class="btn btn-danger">删除</button>
-                </td>
-            </tr>
-            <tr>
-                <td>S18083104</td>
-                <td>扩增子文库</td>
-                <td>PE(SE)150</td>
-                <td>组织</td>
-                <td>Homo_sapiens</td>
-                <td>6G raw data</td>
-                <td>A705</td>
-                <td>ATCACGAC</td>
-                <td>无降解</td>
-                <td>首测</td>
-                <td>T1</td>
-                <td>
-                    <button class="btn btn-secondary"><a href="{{ url_for('samples.samplesEdit') }}"> 编辑</a></button>
-                    <button class="btn btn-danger">删除</button>
-                </td>
-            </tr>
-            <tr>
-                <td>S18083105</td>
-                <td>扩增子文库</td>
-                <td>PE(SE)150</td>
-                <td>组织</td>
-                <td>Homo_sapiens</td>
-                <td>6G raw data</td>
-                <td>A705</td>
-                <td>ATCACGAC</td>
-                <td>无降解</td>
-                <td>首测</td>
-                <td>T2</td>
-                <td>
-                    <button class="btn btn-secondary"><a href="{{ url_for('samples.samplesEdit') }}"> 编辑</a></button>
-                    <button class="btn btn-danger">删除</button>
-                </td>
-            </tr>
-            <tr>
-                <td>S18083106</td>
-                <td>扩增子文库</td>
-                <td>PE(SE)150</td>
-                <td>组织</td>
-                <td>Homo_sapiens</td>
-                <td>6G raw data</td>
-                <td>A705</td>
-                <td>ATCACGAC</td>
-                <td>无降解</td>
-                <td>首测</td>
-                <td>T3</td>
-                <td>
-                    <button class="btn btn-secondary"><a href="{{ url_for('samples.samplesEdit') }}"> 编辑</a></button>
-                    <button class="btn btn-danger">删除</button>
-                </td>
-            </tr>
+            {% endfor %}
         </tbody>
     </table>
 </div><!-- end sample info-->
 <hr>
-<div class=" d-flex  justify-content-center">
-    <ul class="pagination">
-        <li class="page-item"><a class="page-link" href="#">上一页</a></li>
-        <li class="page-item"><a class="page-link" href="#">1</a></li>
-        <li class="page-item"><a class="page-link" href="#">2</a></li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-        <li class="page-item"><a class="page-link" href="#">4</a></li>
-        <li class="page-item"><a class="page-link" href="#">5</a></li>
-        <li class="page-item"><a class="page-link" href="#">6</a></li>
-        <li class="page-item"><a class="page-link" href="#">下一页</a></li>
-    </ul>
-</div>
+
+{% from 'base/macros.html' import pager %}
+
+{{ pager(pagination) }}
 
 {% endblock %}

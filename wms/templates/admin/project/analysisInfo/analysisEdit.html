@@ -9,8 +9,11 @@
 <br>
 <br>
 <br>
+<h3>修改分析信息</h3>
 <div>
     <form class=" form-inline" action="{{ url_for('analysis.analysisEdit') }}" method="POST">
+        {{ form.csrf_token }}
+        {{ form.analysisId(type='hidden') }}
         {{ form.csrf_token }}
         {{ form.cGroupName.label }}
         {{ form.cGroupName(class='form-control') }}
