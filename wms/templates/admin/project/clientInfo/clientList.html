@@ -8,7 +8,7 @@
             <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#demo">添加客户</button>
 
             <div id="demo" class="collapse">
-                <form action="">
+                <form action="{{ url_for('client.clientAdd') }}" method="POST">
                     {{ form.csrf_token }}
                     <div class=" form-group">
                         {{ form.userName.label }}
@@ -78,81 +78,34 @@
                 </tr>
             </thead>
             <tbody class="">
+                {% for client in pagination.items  %}
                 <tr>
-                    <td>张三</td>
-                    <td>男</td>
-                    <td>药学院</td>
-                    <td>1234567890</td>
-                    <td>123456789@163.com</td>
-                    <td>厦门市翔安区厦门大学翔安校区药学院</td>
+                    <td>{{ client.name }}</td>
+                    <td>{{ client.gender }}</td>
+                    <td>{{ client.organization }}</td>
+                    <td>{{ client.telephone }}</td>
+                    <td>{{ client.email }}</td>
+                    <td>{{ client.address }}</td>
                     <td><a href="{{ url_for('project.projectList') }}">查看</a></td>
                     <td>备注信息</td>
                     <td>
                         <div class=" btn-group">
-                            <span class=" btn btn-secondary"><a class=" text-white"
-                                    href="{{ url_for('client.clientEdit') }}"> 编辑</a></span>
-                            <button class=" btn btn-danger">删除</button>
+                            <a class="btn btn-secondary"
+                                href="{{ url_for('client.clientEdit') }}?id={{ client.id }}">编辑</a>
+                            <a class="btn btn-danger" href="{{ url_for('client.ClientDel') }}?id={{ client.id }}">删除</a>
                         </div>
                     </td>
                 </tr>
-
-                <tr>
-                    <td>李四</td>
-                    <td>男</td>
-                    <td>生科院</td>
-                    <td>22222222222</td>
-                    <td>6666666@163.com</td>
-                    <td>厦门市翔安区厦门大学翔安校区生科院</td>
-                    <td><a href="{{ url_for('project.projectList') }}">查看</a></td>
-                    <td>备注信息</td>
-                    <td>
-                        <div class=" btn-group">
-                            <span class=" btn btn-secondary"><a class=" text-white"
-                                    href="{{ url_for('client.clientEdit') }}"> 编辑</a></span>
-                            <button class=" btn btn-danger">删除</button>
-                        </div>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>王五</td>
-                    <td>女</td>
-                    <td>医学院</td>
-                    <td>1234567890</td>
-                    <td>123456789@163.com</td>
-                    <td>厦门市翔安区厦门大学翔安校区药学院</td>
-                    <td><a href="{{ url_for('project.projectList') }}">查看</a></td>
-                    <td>备注信息</td>
-                    <td>
-                        <div class=" btn-group">
-                            <span class=" btn btn-secondary"><a class=" text-white"
-                                    href="{{ url_for('client.clientEdit') }}"> 编辑</a></span>
-                            <button class=" btn btn-danger">删除</button>
-                        </div>
-                    </td>
-                </tr>
-
-
+                {% endfor  %}
             </tbody>
-
         </table>
-
     </form>
 </div>
 
 <hr>
 
-<div class=" d-flex  justify-content-center">
-    <ul class="pagination">
-        <li class="page-item"><a class="page-link" href="#">上一页</a></li>
-        <li class="page-item"><a class="page-link" href="#">1</a></li>
-        <li class="page-item"><a class="page-link" href="#">2</a></li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-        <li class="page-item"><a class="page-link" href="#">4</a></li>
-        <li class="page-item"><a class="page-link" href="#">5</a></li>
-        <li class="page-item"><a class="page-link" href="#">6</a></li>
-        <li class="page-item"><a class="page-link" href="#">下一页</a></li>
-    </ul>
-</div>
+{% from 'base/macros.html' import pager %}
+
+{{ pager(pagination) }}
 
 {% endblock %}

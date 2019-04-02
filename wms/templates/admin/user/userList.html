@@ -68,7 +68,7 @@
                 <td>{{ admin.unit }}</td>
                 <td>
                     <a class="btn btn-secondary" href="{{ url_for('user.userInfoEdit') }}?id={{ admin.id }}">编辑</a>
-                    <a class="btn btn-danger" href="{{ url_for('user.userDel',id=admin.id )  }}">删除</a>
+                    <a class="btn btn-danger" href="{{ url_for('user.userDel') }}?id={{ admin.id }}">删除</a>
                 </td>
                 <td>
                     <a class=" text-danger" href="{{ url_for('user.userPasswordEdit') }}">修改密码</a>

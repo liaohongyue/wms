@@ -25,11 +25,13 @@ def userList():
 
 
 
-@user_bp.route('/userDel/<int:id>/')
-def userDel(id):
-    admin = Admin.query.get(id)
-    db.session.delete(admin)
-    db.session.commit()
+@user_bp.route('/userDel/')
+def userDel():
+    id = request.args.get('id', 0, type=int)
+    if id != '0' :
+        admin = Admin.query.get(id)
+        db.session.delete(admin)
+        db.session.commit()
     return redirect(url_for('user.userList'))
 
 @user_bp.route('/userAdd', methods=['GET','POST'])

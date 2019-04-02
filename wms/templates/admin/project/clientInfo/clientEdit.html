@@ -13,45 +13,40 @@
     </div>
     <h1>修改客户信息</h1>
     <div name="addClient">
-        <form action="">
-            <div class=" form-group">
-                <label for="">姓名</label>
-                <input class=" form-control" type="text">
-            </div>
-            <div>
-                <label for="">性别</label>
-                <div class=" radio form-control">
-                    <label class="radio-inline" for="">
-                        <input type="radio" name="gender" checked>男
-                    </label>
-
-                    <label class="radio-inline" for="">
-                        <input type="radio" name="gender">女
-                    </label>
+        <form action="{{ url_for('client.clientEdit') }}" method="POST">
+                {{ form.csrf_token }}
+                {{ form.clientId(type='hidden') }}
+                <div class=" form-group">
+                    {{ form.userName.label }}
+                    {{ form.userName(class='form-control') }}
                 </div>
-            </div>
-            <div class=" form-group">
-                <label for="">单位</label>
-                <input class=" form-control" type="text">
-            </div>
-            <div class=" form-group">
-                <label for="">电话</label>
-                <input class=" form-control" type="text">
-            </div>
-            <div class=" form-group">
-                <label for="">电子邮箱</label>
-                <input class=" form-control" type="text">
-            </div>
-            <div class=" form-group">
-                <label for="">通讯地址</label>
-                <input class=" form-control" type="text">
-            </div>
-            <div class=" form-group">
-                <label for="">备注信息</label>
-                <input class=" form-control" type="text">
-            </div>
-            <button class=" btn btn-primary" type="submit">取消</button>
-            <button class=" btn btn-primary" type="submit">确认修改</button>
+
+                <div class=" radio radio-inline">
+                    {{ form.gender.label }}
+                    {{ form.gender }}
+                </div>
+                <div class=" form-group">
+                    {{ form.organization.label }}
+                    {{ form.organization(class='form-control') }}
+                </div>
+                <div class=" form-group">
+                    {{ form.telephone.label }}
+                    {{ form.telephone(class='form-control') }}
+                </div>
+                <div class=" form-group">
+                    {{ form.email.label }}
+                    {{ form.email(class='form-control') }}
+                </div>
+                <div class=" form-group">
+                    {{ form.address.label }}
+                    {{ form.address(class='form-control') }}
+                </div>
+                <div class=" form-group">
+                    {{ form.remark.label }}
+                    {{ form.remark(class='form-control') }}
+                </div>
+                <!-- <button class=" btn btn-primary" type="submit">确认添加</button> -->
+                {{ form.submit(class='btn btn-primary') }}
         </form>
     </div>
 
