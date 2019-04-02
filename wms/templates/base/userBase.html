@@ -7,7 +7,7 @@
         <div>
             <ul class=" nav nav-pills ">
                 <li class=" nav-item">
-                    <a class=" nav-link active" href="#">用户列表</a>
+                    <a class=" nav-link active" href="{{ url_for('user.userList') }}">用户列表</a>
                 </li>
                 <li class=" nav-item">
                     <a class=" nav-link" href="#">修改权限</a>
@@ -15,8 +15,15 @@
             </ul>
         </div>
     </div><!-- end col-2 -->
-    
+
     <div class=" col-11">
+        {% if mess %}
+        <div class="alert alert-danger">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong>{{ mess }}</strong>
+        </div>
+        {% endif %}
+
         {% block rightContent %}
         {% endblock %}
 

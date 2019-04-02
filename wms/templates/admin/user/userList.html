@@ -10,41 +10,37 @@
 <div>
     <button class="btn btn-info" data-target="#addUser" data-toggle="collapse">添加用户</button>
     <div class=" collapse" id='addUser'>
-        <form action="">
+        <form action="{{ url_for('user.userAdd') }}" method="POST">
+            {{ form.csrf_token }}
             <div class=" form-group">
-                <label for="">用户名</label>
-                <input class=" form-control" type="text" name="" id="">
+                {{ form.name.label }}
+                {{ form.name(class='form-control') }}
             </div>
-            <div>
-                <label for="">性别：</label>
-                <label class=" radio-inline" for="">
-                    <input type="radio" name="" id="" checked>男
-                </label>
-                <label class=" radio-inline" for="">
-                    <input type="radio" name="" id="">女
-                </label>
+            <div class=" radio radio-inline">
+                {{ form.gender.label }}
+                {{ form.gender }}
             </div>
             <div class=" form-group">
-                <label for="">单位</label>
-                <input class=" form-control" type="text" name="" id="">
+                {{ form.telephone.label }}
+                {{ form.telephone(class="form-control") }}
             </div>
             <div class=" form-group">
-                <label for="">电子邮箱:</label>
-                <input class=" form-control" type="email" name="" id="">
+                {{ form.email.label }}
+                {{ form.email(class="form-control") }}
             </div>
             <div class=" form-group">
-                <label for="">单位</label>
-                <input class=" form-control" type="text" name="" id="">
+                {{ form.unit.label }}
+                {{ form.unit(class="form-control") }}
             </div>
             <div class=" form-group">
-                <label for="">密码</label>
-                <input class=" form-control" type="password" name="" id="">
+                {{ form.password.label }}
+                {{ form.password(class="form-control") }}
             </div>
             <div class=" form-group">
-                <label for="">确认密码</label>
-                <input class=" form-control" type="password" name="" id="">
+                {{ form.password_enter.label }}
+                {{ form.password_enter(class="form-control") }}
             </div>
-            <button class="btn btn-primary">提交数据</button>
+            {{ form.submit(class="btn btn-primary") }}
         </form>
     </div>
 </div>
@@ -63,65 +59,30 @@
 
         </thead>
         <tbody>
+            {% for admin in pagination.items  %}
             <tr>
-                <td>张三</td>
-                <td>男</td>
-                <td>1234567891</td>
-                <td>12345678@qq.com</td>
-                <td>药学院</td>
+                <td>{{ admin.name }}</td>
+                <td>{{ admin.gender }}</td>
+                <td>{{ admin.telephone }}</td>
+                <td>{{ admin.email }}</td>
+                <td>{{ admin.unit }}</td>
                 <td>
-                    <a class="btn btn-secondary" href="{{ url_for('user.userInfoEdit') }}">编辑</a>
-                    <button class="btn btn-danger">删除</button>
+                    <a class="btn btn-secondary" href="{{ url_for('user.userInfoEdit') }}?id={{ admin.id }}">编辑</a>
+                    <a class="btn btn-danger" href="{{ url_for('user.userDel',id=admin.id )  }}">删除</a>
                 </td>
                 <td>
                     <a class=" text-danger" href="{{ url_for('user.userPasswordEdit') }}">修改密码</a>
                 </td>
             </tr>
-            <tr>
-                <td>张三</td>
-                <td>男</td>
-                <td>1234567891</td>
-                <td>12345678@qq.com</td>
-                <td>药学院</td>
-                <td>
-                    <a class="btn btn-secondary" href="{{ url_for('user.userInfoEdit') }}">编辑</a>
-                    <button class="btn btn-danger">删除</button>
-                </td>
-                <td>
-                    <a class=" text-danger" href="{{ url_for('user.userPasswordEdit') }}">修改密码</a>
-                </td>
-            </tr>
-            <tr>
-                <td>张三</td>
-                <td>男</td>
-                <td>1234567891</td>
-                <td>12345678@qq.com</td>
-                <td>药学院</td>
-                <td>
-                    <a class="btn btn-secondary" href="{{ url_for('user.userInfoEdit') }}">编辑</a>
-                    <button class="btn btn-danger">删除</button>
-                </td>
-                <td>
-                    <a class=" text-danger" href="{{ url_for('user.userPasswordEdit') }}">修改密码</a>
-                </td>
-            </tr>
+            {% endfor %}
         </tbody>
     </table>
 </div>
 <hr>
-<div class=" d-flex  justify-content-center">
-    <ul class="pagination">
-        <li class="page-item"><a class="page-link" href="#">上一页</a></li>
-        <li class="page-item"><a class="page-link" href="#">1</a></li>
-        <li class="page-item"><a class="page-link" href="#">2</a></li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-        <li class="page-item"><a class="page-link" href="#">4</a></li>
-        <li class="page-item"><a class="page-link" href="#">5</a></li>
-        <li class="page-item"><a class="page-link" href="#">6</a></li>
-        <li class="page-item"><a class="page-link" href="#">下一页</a></li>
-    </ul>
 
-</div>
 
+{% from 'base/macros.html' import pager %}
+
+{{ pager(pagination) }}
 
 {% endblock %}

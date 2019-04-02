@@ -24,14 +24,15 @@ def clientEdit():
 @client_bp.route('/clientAdd', methods=['GET','POST'])
 def clientAdd():
     form = ClientForm()
+    formquery = ClientQuery()
     if request.method =='POST': 
         if form.validate():
             return redirect(url_for('project.projectList'))
         else:
             mess = "添加失败，请却数据正确"
-    return render_template('admin/project/clientInfo/clientList.html',form = form,mess=mess)
+            return render_template('admin/project/clientInfo/clientList.html',form = form,formq=formquery,mess=mess)
     mess = "添加失败，请却数据正确"
-    return render_template('admin/project/clientInfo/clientList.html',form = form,mess=mess)
+    return render_template('admin/project/clientInfo/clientList.html',form = form,formq=formquery,mess=mess)
 
 @client_bp.route('/clientQuery', methods=['GET','POST'])
 

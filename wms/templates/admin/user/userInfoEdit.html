@@ -8,33 +8,30 @@
 
 <hr>
 <div class="" id='editUser'>
-    <form action="">
+    <form action="{{ url_for('user.userInfoEdit') }}" method="POST">
+        {{ form.csrf_token }}
+        {{ form.adminid(type='hidden') }}
         <div class=" form-group">
-            <label for="">用户名</label>
-            <input class=" form-control" type="text" name="" id="">
+            {{ form.name.label }}
+            {{ form.name(class='form-control') }}
         </div>
-        <div>
-            <label for="">性别：</label>
-            <label class=" radio-inline" for="">
-                <input type="radio" name="" id="" checked>男
-            </label>
-            <label class=" radio-inline" for="">
-                <input type="radio" name="" id="">女
-            </label>
+        <div class=" radio radio-inline">
+            {{ form.gender.label }}
+            {{ form.gender }}
         </div>
         <div class=" form-group">
-            <label for="">单位</label>
-            <input class=" form-control" type="text" name="" id="">
+            {{ form.telephone.label }}
+            {{ form.telephone(class="form-control") }}
         </div>
         <div class=" form-group">
-            <label for="">电子邮箱:</label>
-            <input class=" form-control" type="email" name="" id="">
+            {{ form.email.label }}
+            {{ form.email(class="form-control") }}
         </div>
         <div class=" form-group">
-            <label for="">单位</label>
-            <input class=" form-control" type="text" name="" id="">
+            {{ form.unit.label }}
+            {{ form.unit(class="form-control") }}
         </div>
-        <button class="btn btn-primary">修改信息</button>
+        {{ form.submit(class="btn btn-primary") }}
     </form>
 </div>
 
