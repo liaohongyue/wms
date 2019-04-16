@@ -22,17 +22,15 @@ def projectEdit():
         if id != 0 :
             project = Project.query.get(id)
             form.projectId.data = id
-            form.itemNumber.data = project.ItemNumber
+            form.itemNumber.data = project.itemNumber
             form.remark.data = project.remark
             return render_template('admin/project/projectInfo/projectEdit.html',form = form)
     if request.method == 'POST':
         if form.validate:
             id = form.projectId.data
             project = Project.query.get(id)
-            project.ItemNumber = form.itemNumber.data
+            project.itemNumber = form.itemNumber.data
             project.remark = form.remark.data
-            print(project.ItemNumber )
-            print(project.remark)
             db.session.commit()
             mess = '修改成功'
             return render_template('admin/project/projectInfo/projectEdit.html',form = form, mess = mess)
@@ -65,7 +63,7 @@ def projectAdd():
     if request.method =='POST':
         if form.validate:
             project = Project()
-            project.ItemNumber = form.itemNumber.data
+            project.itemNumber = form.itemNumber.data
             db.session.add(project)
             db.session.commit()
             samples = form.samples.data
