@@ -1,7 +1,9 @@
 from flask import Blueprint,render_template, request,redirect,url_for
+from flask import session
 from wms.forms.analysis import FormAdd
 from wms.models.analysis import Analysis
 from wms.models.sample import Sample
+from wms.models.project import Project
 from wms.extension import db
 
 analysis_bp = Blueprint('analysis',__name__)
@@ -13,14 +15,31 @@ def navInfo():
     pageTitle='分析信息'
     return dict(firstnav=firstnav,secondnav=secondnav,pageTitle=pageTitle)
 
+@analysis_bp.before_request
+def initInfo():
+    projectId = request.args.get('projectId', 'empty', type=str )
+    if projectId != 'empty':
+        session['projectId'] = projectId
+        project = Project.query.get(int(projectId))
+        session['projectItem'] = project.itemNumber
+    elif projectId == 'clear':
+        session['projectId'] = '0'
+
+
 @analysis_bp.route('/analysisList',methods=['GET','POST'])
 def analysisList():
     form = FormAdd()
     if request.method == 'GET':
         page = request.args.get('page', 1, type=int)
+        projectId = int(session.get('projectId'))
         per_page =40
-        pagination = Analysis.query.paginate(page,per_page)
-        samplesPagination = Sample.query.paginate(page,per_page)
+        if projectId != 0:
+            pagination = Analysis.query.filter(Analysis.projects_id == projectId ).paginate(page,per_page)
+        else:
+            return redirect(url_for('project.projectList'))
+        #pagination = Analysis.query.paginate(page,per_page)
+        samplesPagination = Sample.query.filter(Sample.projects_id == projectId).paginate(page,per_page)
+        #samplesPagination = Sample.query.paginate(page,per_page)
         return render_template('admin/project/analysisInfo/analysisList.html',form = form,pagination = pagination, samplesPagination = samplesPagination)
     mess = ''
     return render_template('admin/project/analysisInfo/analysisList.html',form = form, mess=mess)
@@ -62,15 +81,20 @@ def analysisDel():
 @analysis_bp.route('/analysisAdd',methods=['GET','POST'])
 def analysisAdd():
     form = FormAdd()
-    mess =''
     if request.method == 'POST':
         if form.validate:
+            projectId = int(session.get('projectId'))
+            print(projectId)
+            if projectId != 0 :
+                project = Project.query.get(projectId)
+            else:
+                return redirect(url_for('project.projectList'))
             analysis = Analysis()
             analysis.CGroupName = form.cGroupName.data
             analysis.Csamples = form.cSamples.data
             analysis.EGroupName = form.eGroupName.data
             analysis.Esamples = form.eSamples.data
-            db.session.add(analysis)
+            project.analysis.append(analysis)
             db.session.commit()
             mess = '添加成功'
             return  redirect(url_for('analysis.analysisList'))

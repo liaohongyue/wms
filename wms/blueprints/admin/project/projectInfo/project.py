@@ -1,8 +1,9 @@
 from flask import Blueprint, request, redirect, url_for
-from flask import render_template
+from flask import render_template, session
 from wms.forms.project import FormAdd, FormQuery, FormEdit
 from wms.models.sample import Sample
 from wms.models.project import Project
+from wms.models.client import Client
 from wms.extension import db
 
 project_bp = Blueprint('project',__name__)
@@ -13,6 +14,21 @@ def navInfo():
     secondnav='projectInfo'
     pageTitle ='项目信息'
     return dict(firstnav=firstnav,secondnav=secondnav, pageTitle= pageTitle)
+
+@project_bp.before_request
+def initInfo():
+    clientId = request.args.get('clientId', 'empty', type=str)
+    if clientId != 'empty':
+        if clientId == 'clear':
+            session['clientId'] = '0'
+            session['clientName'] = '所有客户'
+            session['clientOrg'] = ''
+        else:
+            session['clientId'] = clientId
+            client = Client.query.get(int(clientId))
+            session['clientName'] = client.name
+            session['clientOrg'] = client.organization
+    
 
 @project_bp.route('/projectEdit',methods=['GET','POST'])
 def projectEdit():
@@ -40,12 +56,25 @@ def projectEdit():
 @project_bp.route('/projectList',methods=['GET','POST'])
 def projectList():
     form = FormQuery()
-    mess =''
-    if request.method == 'GET':
-        page = request.args.get('page', 1, type=int)
-        per_page =10
+    searchData = ''
+    page = request.args.get('page', 1, type=int)
+    clientId = int(session.get('clientId'))
+    per_page = 5
+    if form.itemNumber.data != None or session.get('projectSearchData') != None:
+        if form.itemNumber.data != None:
+            searchData = str(form.itemNumber.data)
+            session['projectSearchData'] = searchData
+        elif session.get('projectSearchData') != None:
+            searchData = session.get('projectSearchData')
+        searchData = '%' + searchData + '%'
+    print(searchData)
+    if clientId != 0:  # 指定客户id号
+        pagination =  Project.query.filter(Project.client_id == clientId).paginate(page,per_page)
+    elif searchData != '': # 只有搜索内容
+        pagination =Project.query.filter(Project.itemNumber.like(searchData)).paginate(page,per_page)
+    else: # 没有指定客户id，也没搜索内容
         pagination =Project.query.paginate(page,per_page)
-    return render_template('admin/project/projectInfo/projectList.html',form = form, mess =mess,pagination = pagination)
+    return render_template('admin/project/projectInfo/projectList.html',form = form,pagination = pagination)
 
 @project_bp.route('/projectDel/')
 def projectDel():
@@ -62,9 +91,11 @@ def projectAdd():
     form = FormAdd()
     if request.method =='POST':
         if form.validate:
+            clientId = int(session.get('clientId'))
+            client = Client.query.get(clientId)
             project = Project()
             project.itemNumber = form.itemNumber.data
-            db.session.add(project)
+            client.projects.append(project)
             db.session.commit()
             samples = form.samples.data
             samples = samples.split(sep='\n')
@@ -84,7 +115,7 @@ def projectAdd():
                 sampleInfo.extractStatus = sample[8]
                 sampleInfo.seqTimes = sample[9]
                 sampleInfo.chartName = sample[10]
-                db.session.add(sampleInfo)
+                project.samples.append(sampleInfo)
                 db.session.commit()
             mess = '添加成功'
             return render_template('admin/project/projectInfo/projectAdd.html',form = form,mess = mess)

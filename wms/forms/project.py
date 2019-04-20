@@ -3,6 +3,7 @@ from wtforms import StringField, SubmitField,TextAreaField, IntegerField
 from wtforms.validators import length,DataRequired
 
 class FormAdd(FlaskForm):
+    clientId = StringField('客户ID号')
     itemNumber = StringField("项目编号",validators=[DataRequired()])
     samples = TextAreaField("样品信息",render_kw={'placeholder':'按格式要求输入样品信息，制表符分隔','rows':'10','id':'SamplesArea'})
     remark = TextAreaField("备注信息",render_kw={'placeholder':'这里输入一些项目备注信息','rows':'5','id':'remarkInfo'})

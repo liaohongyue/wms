@@ -14,3 +14,4 @@ class Sample(db.Model):
     sampleType = db.Column(db.String(30))
     chartName = db.Column(db.String(30))
     remark = db.Column(db.String(200))
+    projects_id = db.Column(db.Integer, db.ForeignKey('project.id'))

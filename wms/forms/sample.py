@@ -25,3 +25,4 @@ class FormEidt(FlaskForm):
     chartName = StringField('图表名称',render_kw={'placeholder':'图表名称'})
     remark = StringField('备注',render_kw={'placeholder':'备注信息'})
     submit = SubmitField("确认修改")
+

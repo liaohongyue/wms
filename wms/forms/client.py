@@ -14,9 +14,5 @@ class ClientForm(FlaskForm):
     submit = SubmitField("确认")
 
 class ClientQuery(FlaskForm):
-    userName = StringField("姓名", render_kw={'placeholder':'姓名',})
-    organization = StringField("单位",render_kw={'placeholder':'单位名称'})
-    email = StringField("电子邮箱",render_kw={'placeholder':'电子邮箱',})
-    telephone = StringField('电话',render_kw={'placeholder':'电话号码',})
-    address = StringField("通讯地址",render_kw={'placeholder':'通讯地址',})
+    clientSearch = StringField("搜索内容", render_kw={'placeholder':'搜索',})
     submit = SubmitField("搜索")

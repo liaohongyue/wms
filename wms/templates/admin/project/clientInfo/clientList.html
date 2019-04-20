@@ -12,7 +12,7 @@
                     {{ form.csrf_token }}
                     <div class=" form-group">
                         {{ form.userName.label }}
-                        {{ form.userName(class='form-control') }}
+                        {{ form.userName(class='form-control',style="width:250px;") }}
                     </div>
 
                     <div class=" radio radio-inline">
@@ -22,23 +22,23 @@
                     </div>
                     <div class=" form-group">
                         {{ form.organization.label }}
-                        {{ form.organization(class='form-control') }}
+                        {{ form.organization(class='form-control',style="width:500px;") }}
                     </div>
                     <div class=" form-group">
                         {{ form.telephone.label }}
-                        {{ form.telephone(class='form-control') }}
+                        {{ form.telephone(class='form-control',style="width:500px;") }}
                     </div>
                     <div class=" form-group">
                         {{ form.email.label }}
-                        {{ form.email(class='form-control') }}
+                        {{ form.email(class='form-control',type='email',style="width:500px;") }}
                     </div>
                     <div class=" form-group">
                         {{ form.address.label }}
-                        {{ form.address(class='form-control') }}
+                        {{ form.address(class='form-control',style="width:500px;") }}
                     </div>
                     <div class=" form-group">
                         {{ form.remark.label }}
-                        {{ form.remark(class='form-control') }}
+                        {{ form.remark(class='form-control',style="width:500px;") }}
                     </div>
                     <!-- <button class=" btn btn-primary" type="submit">确认添加</button> -->
                     {{ form.submit(class='btn btn-primary') }}
@@ -50,14 +50,10 @@
 
     <hr>
     <div class="">
-        <form class=" form-inline" action="{{ url_for('client.clientQuery') }}" method="POST">
+        <form class=" form-inline" action="{{ url_for('client.clientList') }}" method="POST">
             {{ formq.csrf_token }}
             <label class=" text-info" for="">过滤条件：</label>
-            {{ formq.userName(class='form-control') }}
-            {{ formq.organization(class='form-control') }}
-            {{ formq.telephone(class='form-control') }}
-            {{ formq.email(class='form-control') }}
-            {{ formq.address(class='form-control') }}
+            {{ formq.clientSearch(class='form-control') }}
             {{ formq.submit(class='btn btn-info') }}
         </form>
     </div>
@@ -86,7 +82,7 @@
                     <td>{{ client.telephone }}</td>
                     <td>{{ client.email }}</td>
                     <td>{{ client.address }}</td>
-                    <td><a href="{{ url_for('project.projectList') }}">查看</a></td>
+                    <td><a href="{{ url_for('project.projectList') }}?clientId={{ client.id }}">查看</a></td>
                     <td>备注信息</td>
                     <td>
                         <div class=" btn-group">

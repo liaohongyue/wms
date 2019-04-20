@@ -73,7 +73,7 @@ def samplesEdit():
             sample.libraryType = form.libraryType.data
             sample.seqType = form.seqType.data
             sample.sampleType = form.sampleType.data
-            sample.species = form.sampleType.data
+            sample.species = form.species.data
             sample.seqDose = form.seqDose.data
             sample.indexItem = form.indexItem.data
             sample.indexForward = form.indexForward.data

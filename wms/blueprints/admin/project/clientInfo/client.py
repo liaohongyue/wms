@@ -1,8 +1,9 @@
-from flask import Blueprint
+from flask import Blueprint,session
 from flask import render_template, redirect, url_for ,request
 from wms.forms.client import ClientForm,ClientQuery
 from wms.models.client import Client
 from wms.extension import db
+from sqlalchemy import or_
 from faker import Faker
 
 client_bp = Blueprint('client',__name__)
@@ -25,14 +26,26 @@ def ClientDel():
     return redirect(url_for('client.clientlist'))
 
 
-@client_bp.route('/clientList')
-def clientlist():
+@client_bp.route('/clientList', methods=['GET','POST'])
+def clientList():
     form = ClientForm()
     formquery = ClientQuery()
     page = request.args.get('page', 1, type=int)
     per_page =10
-    pagination = Client.query.paginate(page,per_page)
+    if formquery.clientSearch.data != None or session.get('searchData') != None :
+        if formquery.clientSearch.data != None:
+            searchData = str(formquery.clientSearch.data)
+            session['searchData'] = searchData
+        elif session.get('searchData') != None:
+            searchData = session.get('searchData')
+        searchData = '%' + searchData + '%'
+        #pagination = Client.query.filter( or_(Client.name.like(searchData), Client.name.like(searchData)), Client.organization.like(searchData), Client.address.like(searchData)).paginate(page,per_page)
+        #pagination = Client.query.filter(Client.name.like(searchData)).paginate(page,per_page)
+        pagination = Client.query.filter(or_( Client.name.like(searchData),Client.organization.like(searchData),Client.email.like(searchData) ,Client.address.like(searchData)  )).paginate(page,per_page)
+    else:
+        pagination = Client.query.paginate(page,per_page)
     return render_template('admin/project/clientInfo/clientList.html',form = form,formq=formquery,pagination= pagination )
+
 
 @client_bp.route('/clientEdit', methods=['GET','POST'])
 def clientEdit():
@@ -93,7 +106,7 @@ def clientAdd():
             db.session.add(client)
             db.session.commit()
             #===========================
-            # for i in range(300):
+            # for i in range(3000):
             #     fake = Faker(locale='zh_CN')
             #     info = fake.profile(fields=None, sex=None)
             #     client = Client()
@@ -110,15 +123,14 @@ def clientAdd():
             #     db.session.add(client)
             #     db.session.commit()
             mess ='客户:  ' + client.name + ' 添加成功'
-            return render_template('admin/project/clientInfo/clientList.html',form = form,formq=formquery,mess=mess)
+            return redirect(url_for('client.clientlist'))
         else:
             mess = "添加失败，请验证数据正确"
-            return render_template('admin/project/clientInfo/clientList.html',form = form,formq=formquery,mess=mess)
+            return redirect(url_for('client.clientlist'))
     mess = "添加失败，请却数据正确"
-    return render_template('admin/project/clientInfo/clientList.html',form = form,formq=formquery,mess=mess)
+    return redirect(url_for('client.clientlist'))
 
 @client_bp.route('/clientQuery', methods=['GET','POST'])
-
 def clientQuery():
     formquery = ClientQuery()
     form = ClientForm()

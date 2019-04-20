@@ -8,3 +8,4 @@ class Analysis(db.Model):
     EGroupName = db.Column(db.String(20))
     Esamples = db.Column(db.String(200))
     remark = db.Column(db.String(200))
+    projects_id = db.Column(db.Integer, db.ForeignKey('project.id'))

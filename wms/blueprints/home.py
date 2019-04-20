@@ -36,7 +36,7 @@ def login():
     pageTitle = '登录界面'
     if request.method == 'POST' and form.validate():
         if form.userName.data == "admin" and form.passWord.data == 'admin' :
-            return redirect(url_for('client.clientlist'))
+            return redirect(url_for('client.clientList'))
     return render_template('login.html', form = form, pageTitle =pageTitle )
 
 
