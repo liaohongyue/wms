@@ -1,6 +1,8 @@
-from flask import Blueprint,request, render_template,redirect,url_for
-from wms.forms.sample import FormQuery, FormEidt
+from flask import Blueprint,request, render_template,redirect,url_for,session
+from wms.forms.sample import SampleEidtForm, SampleQueryForm, SampleAddForm
+from sqlalchemy import or_
 from wms.models.sample import Sample
+from wms.models.project import Project
 from wms.extension import db
 
 samples_bp = Blueprint('samples',__name__)
@@ -14,24 +16,55 @@ def navInfo():
 
 @samples_bp.route('/samplesList',methods=['GET','POST'])
 def samplesList():
-    form = FormQuery()
-    if request.method =='POST':
-        if form.validate():
-            mess = '查询成功'
-            return render_template('admin/project/samplesInfo/samplesList.html',form = form,mess =mess)
-        else:
-            mess = '查询失败'
-            return render_template('admin/project/samplesInfo/samplesList.html',form = form,mess =mess)   
-    page = request.args.get('page', 1, type=int)
+    mess = ''
+    form = SampleQueryForm()
+    page = request.args.get('page', 1, type=str)
+    if page == 'clear':
+        session['sampleSearch'] = None
+        page='1'
+    page = int(page)
     per_page =10
-    pagination =Sample.query.paginate(page,per_page)
-    mess=''
-    return render_template('admin/project/samplesInfo/samplesList.html',form = form,pagination=pagination)
+    if form.sampleSearch.data != None or session.get('sampleSearch') != None:
+        if form.sampleSearch.data != None:
+            sampleSearch = form.sampleSearch.data
+            session['sampleSearch'] = sampleSearch
+        elif session.get('sampleSearch') != None:
+            sampleSearch = session.get('sampleSearch')
+        sampleSearch = '%' + sampleSearch + '%'
+        pagination = Sample.query.filter(or_( Sample.amogeneItem.like(sampleSearch),Sample.species.like(sampleSearch)  )).paginate(page,per_page)
+        mess = '查询成功'
+    else:
+        pagination = Sample.query.paginate(page,per_page)
+    return render_template('admin/project/samplesInfo/samplesList.html', form = form, pagination = pagination, mess = mess)
 
-@samples_bp.route('/samplesAdd')
+@samples_bp.route('/samplesAdd',methods=['GET','POST'] )
 def samplesAdd():
-    mess= ''
-    return render_template('admin/project/samplesInfo/samplesAdd.html', mess = mess)
+    form = SampleAddForm()
+    if request.method == 'POST':
+        if form.validate:
+            project = Project.query.get(form.itemNumber.data)
+            samples = form.samples.data
+            samples = samples.split(sep='\n')
+            for sample in samples:
+                sampleInfo = Sample() # 初始化模型
+                if sample == '':continue #判断输入数据
+                sample = sample.split(sep='\t')
+                if sample[0] == '':continue
+                sampleInfo.amogeneItem  = sample[0]
+                sampleInfo.libraryType  = sample[1]
+                sampleInfo.seqType  = sample[2]
+                sampleInfo.sampleType = sample[3]
+                sampleInfo.species = sample[4]
+                sampleInfo.seqDose  = sample[5]
+                sampleInfo.indexItem = sample[6]
+                sampleInfo.indexForward = sample[7]
+                sampleInfo.extractStatus = sample[8]
+                sampleInfo.seqTimes = sample[9]
+                sampleInfo.chartName = sample[10]
+                project.samples.append(sampleInfo)
+                db.session.commit()
+    form.itemNumber.data = session.get('projectId')
+    return render_template('admin/project/samplesInfo/samplesAdd.html', form = form)
 
 
 @samples_bp.route('/samplesDel/')
@@ -41,13 +74,16 @@ def samplesDel():
         admin = Sample.query.get(id)
         db.session.delete(admin)
         db.session.commit()
+        if session.get('projectId') != None:
+            print(url_for('analysis.analysisList') + "?projectId=" + session.get('projectId'))
+            return  redirect(url_for('analysis.analysisList') + "?projectId=" + session.get('projectId') )
     return redirect(url_for('samples.samplesList'))
 
 
 @samples_bp.route('/samplesEdit',methods=['GET','POST'])
 def samplesEdit():
     mess = ''
-    form = FormEidt()
+    form = SampleEidtForm
     if request.method =='GET':
         id = request.args.get('id',0,type=int)
         sample = Sample.query.get(id)
@@ -83,6 +119,8 @@ def samplesEdit():
             sample.remark = form.remark.data
             db.session.commit()
             mess = '修改成功'
+            if session.get('projectId') != None:
+                return  redirect(url_for('analysis.analysisList') + "?projectId=" + session.get('projectId') )
             return render_template('admin/project/samplesInfo/samplesEdit.html',form = form,mess =mess)
         else:
             mess = '修改失败'

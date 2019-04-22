@@ -17,14 +17,11 @@
         <form class=" form-inline" action="{{ url_for('samples.samplesList') }}" method="POST">
             {{ form.csrf_token }}
             <label class=" text-info" for="">过滤条件：</label>
-            {{ form.amogeneItem(class=" form-control") }}
-            {{ form.libraryType(class=" form-control") }}
-            {{ form.sampleType(class=" form-control") }}
-            {{ form.species(class=" form-control") }}
-            {{ form.seqTimes(class=" form-control ") }}
-            {{ form.submit(class="btn btn-info ") }}
+            {{ form.sampleSearch(class=" form-control") }}
+            {{ form.submit(class="btn btn-primary") }}
         </form>
     </div>
+    <hr>
     <table class=" table table-hover">
         <thead class=" table-info rounded" id="thead">
             <tr>

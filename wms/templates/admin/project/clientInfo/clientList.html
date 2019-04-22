@@ -68,7 +68,6 @@
                     <td>电话</td>
                     <td>电子邮箱</td>
                     <td>通讯地址</td>
-                    <td>相关项目</td>
                     <td>备注信息</td>
                     <td>操作</td>
                 </tr>
@@ -76,14 +75,13 @@
             <tbody class="">
                 {% for client in pagination.items  %}
                 <tr>
-                    <td>{{ client.name }}</td>
+                    <td><a href="{{ url_for('project.projectList') }}?clientId={{ client.id }}">{{ client.name }}</a></td>
                     <td>{{ client.gender }}</td>
                     <td>{{ client.organization }}</td>
                     <td>{{ client.telephone }}</td>
                     <td>{{ client.email }}</td>
                     <td>{{ client.address }}</td>
-                    <td><a href="{{ url_for('project.projectList') }}?clientId={{ client.id }}">查看</a></td>
-                    <td>备注信息</td>
+                    <td>{{ client.remark|truncate(15) }}</td>
                     <td>
                         <div class=" btn-group">
                             <a class="btn btn-secondary"

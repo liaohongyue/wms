@@ -1,69 +1,7 @@
 {% extends "base/projectBase.html" %}
 
-
-{% block addHead %}
-<script>
-    $(function () {
-        $("#checkData").click(function () {
-            $tableBody = ''
-            $samplesArea = $("#SamplesArea").val();
-            $samplesList = $samplesArea.split('\n');
-            for ($i in $samplesList) {
-                $lineData = $samplesList[$i];
-                $lineData = $lineData.split('\t')
-                if ($lineData[0] == '') continue;
-                $amogeneNumber = $lineData[0];
-                $libraryType = $lineData[1];
-                $seqType = $lineData[2];
-                $sampleType = $lineData[3];
-                $species = $lineData[4];
-                $seqDose = $lineData[5];
-                $indexNumber = $lineData[6];
-                $indexForward = $lineData[7];
-                $extractStatus = $lineData[8];
-                $seqTimes = $lineData[9];
-                $chartName = $lineData[10];
-
-                $tr = '<tr>\n' +
-                    ' <td>' + $amogeneNumber + '</td>\n' +
-                    ' <td>' + $libraryType + '</td>\n' +
-                    ' <td>' + $seqType + '</td>\n' +
-                    ' <td>' + $sampleType + '</td>\n' +
-                    ' <td>' + $species + '</td>\n' +
-                    ' <td>' + $seqDose + '</td>\n' +
-                    '  <td>' + $indexNumber + '</td>\n' +
-                    '  <td>' + $indexForward + '</td>\n' +
-                    '  <td>' + $extractStatus + '</td>\n' +
-                    '  <td>' + $seqTimes + '</td>\n' +
-                    '  <td>' + $chartName + '</td>\n' +
-                    '  </tr>';
-                $tableBody = $tableBody + $tr;
-            }
-            $("#tbody").html($tableBody);
-            $("#SamplesArea").attr('disabled', 'disabled');
-            $("#checkData").hide();
-            $('#resetData').show();
-            $("#submit").show();
-
-        });
-    });
-
-    $(function () {
-            $('#resetData').click(function () {
-                $("#SamplesArea").val('');
-                $("#SamplesArea").removeAttr('disabled');
-                $("#tbody").empty();
-                $("#checkData").show();
-                $('#resetData').hide();
-            });
-        }
-
-    );
-    $(document).ready(function () {
-        $('#resetData').hide();
-        $('#submit').hide();
-    })
-</script>
+{% block title %}
+<title>添加项目</title>
 {% endblock %}
 
 
@@ -71,17 +9,18 @@
 
 <div class=" ">
     <ol class=" breadcrumb">
-        <li class=" breadcrumb-item"><a href="#">药学院</a></li>
-        <li class=" breadcrumb-item"><a href="#">张三</a></li>
-        <li class=" breadcrumb-item"><a href="#">AM20190124-01</a></li>
-        <li class=" breadcrumb-item"><a href="#">样品信息</a></li>
+        <li class=" breadcrumb-item"><a href="#">{{ session['clientOrg'] }}</a></li>
+        <li class=" breadcrumb-item"><a href="#">{{ session['clientName'] }}</a></li>
+        <li class=" breadcrumb-item"><a href="#">项目信息</a>
+        </li>
         <li class=" breadcrumb-item"><a href="#">添加样品</a></li>
     </ol>
 </div>
-<form action="">
+<form action="{{ url_for('samples.samplesAdd') }}" method="POST">
     <div class="form-group">
-        <label for="">项目编号:</label>
-        <input type="text" class="form-control" id="projectNumber" value="AM20190124-01" disabled>
+        {{ form.csrf_token }}
+        {{ form.itemNumber.label }}
+        {{ form.itemNumber(class='form-control', type="hidden") }}
     </div>
 
     <div class="form-group">
@@ -101,7 +40,8 @@
                 <td>图表中名字</td>
             </thead>
         </table>
-        <textarea class="form-control" rows="5" id="SamplesArea"></textarea>
+        <!-- <textarea class="form-control" rows="5" id="SamplesArea"></textarea> -->
+        {{ form.samples(class='form-control') }}
         <div class=" btn-group">
             <span class=" btn btn-primary" id="checkData">验证数据</span>
             <span class=" btn btn-danger" id="resetData">重置</span>
@@ -132,8 +72,84 @@
         </table>
     </div> <!-- end table-->
     <hr>
+    <hr>
     <button class=" btn btn-primary" type="submit" id="submit" name="submit">提交数据</button>
 
 </form>
+
+
+<script type="">
+    $(document).ready(function(){
+        $("#SamplesArea").text('');
+        $("#remarkInfo").text('');
+        $("#remarkInfo").hide();
+    }
+    );
+    $(function () {
+                $("#checkData").click(function () {
+                    $tableBody = ''
+                    $samplesArea = $("#SamplesArea").val();
+                    if($samplesArea != ''){
+                    $samplesList = $samplesArea.split('\n');
+                    for ($i in $samplesList) {
+                        $lineData = $samplesList[$i];
+                        $lineData = $lineData.split('\t')
+                        if ($lineData[0] == '') continue;
+                        $amogeneNumber = $lineData[0];
+                        $libraryType = $lineData[1];
+                        $seqType = $lineData[2];
+                        $sampleType = $lineData[3];
+                        $species = $lineData[4];
+                        $seqDose = $lineData[5];
+                        $indexNumber = $lineData[6];
+                        $indexForward = $lineData[7];
+                        $extractStatus = $lineData[8];
+                        $seqTimes = $lineData[9];
+                        $chartName = $lineData[10];
+        
+                        $tr = '<tr>\n' +
+                            ' <td>' + $amogeneNumber + '</td>\n' +
+                            ' <td>' + $libraryType + '</td>\n' +
+                            ' <td>' + $seqType + '</td>\n' +
+                            ' <td>' + $sampleType + '</td>\n' +
+                            ' <td>' + $species + '</td>\n' +
+                            ' <td>' + $seqDose + '</td>\n' +
+                            '  <td>' + $indexNumber + '</td>\n' +
+                            '  <td>' + $indexForward + '</td>\n' +
+                            '  <td>' + $extractStatus + '</td>\n' +
+                            '  <td>' + $seqTimes + '</td>\n' +
+                            '  <td>' + $chartName + '</td>\n' +
+                            '  </tr>';
+                        $tableBody = $tableBody + $tr;
+                    }
+                    $("#tbody").html($tableBody);
+                    //$("#SamplesArea").attr('disabled', 'disabled');
+                    $("#SamplesArea").hide();
+                    $("#checkData").hide();
+                    $('#resetData').show();
+                    $("#submit").show();
+                    $("#remarkInfo").show();
+                }
+                });
+            });
+        
+            $(function () {
+                    $('#resetData').click(function () {
+                        $("#SamplesArea").show();
+                        $("#SamplesArea").removeAttr('disabled');
+                        $("#tbody").empty();
+                        $("#checkData").show();
+                        $('#resetData').hide();
+                        $("#remarkInfo").hide();
+                    });
+                }
+        
+            );
+            $(document).ready(function () {
+                $('#resetData').hide();
+                $('#submit').hide();
+            })
+
+        </script>
 
 {% endblock %}

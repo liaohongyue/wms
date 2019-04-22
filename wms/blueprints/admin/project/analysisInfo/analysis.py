@@ -1,6 +1,6 @@
 from flask import Blueprint,render_template, request,redirect,url_for
 from flask import session
-from wms.forms.analysis import FormAdd
+from wms.forms.analysis import AnalysisForm
 from wms.models.analysis import Analysis
 from wms.models.sample import Sample
 from wms.models.project import Project
@@ -28,7 +28,7 @@ def initInfo():
 
 @analysis_bp.route('/analysisList',methods=['GET','POST'])
 def analysisList():
-    form = FormAdd()
+    form = AnalysisForm()
     if request.method == 'GET':
         page = request.args.get('page', 1, type=int)
         projectId = int(session.get('projectId'))
@@ -46,7 +46,7 @@ def analysisList():
 
 @analysis_bp.route('/analysisEdit',methods=['GET','POST'])
 def analysisEdit():
-    form = FormAdd()
+    form = AnalysisForm()
     if request.method == 'GET':
         id = request.args.get('id',0,type=int)
         analysis = Analysis.query.get(id)
@@ -80,7 +80,7 @@ def analysisDel():
 
 @analysis_bp.route('/analysisAdd',methods=['GET','POST'])
 def analysisAdd():
-    form = FormAdd()
+    form = AnalysisForm()
     if request.method == 'POST':
         if form.validate:
             projectId = int(session.get('projectId'))

@@ -2,7 +2,7 @@ from flask_wtf import FlaskForm
 from  wtforms import StringField,SubmitField,IntegerField
 from wtforms.validators import DataRequired
 
-class FormAdd(FlaskForm):
+class AnalysisForm(FlaskForm):
     analysisId = IntegerField('id')
     cGroupName = StringField('对照组组名',validators=[DataRequired()])
     cSamples = StringField('对照组样本',validators=[DataRequired()])

@@ -1,6 +1,6 @@
 from flask import Blueprint, request, redirect, url_for
 from flask import render_template, session
-from wms.forms.project import FormAdd, FormQuery, FormEdit
+from wms.forms.project import  FormQuery, ProjectForm
 from wms.models.sample import Sample
 from wms.models.project import Project
 from wms.models.client import Client
@@ -32,7 +32,7 @@ def initInfo():
 
 @project_bp.route('/projectEdit',methods=['GET','POST'])
 def projectEdit():
-    form = FormEdit()
+    form = ProjectForm()
     if request.method == 'GET':
         id = request.args.get('id', 0 ,type = int)
         if id != 0 :
@@ -40,6 +40,15 @@ def projectEdit():
             form.projectId.data = id
             form.itemNumber.data = project.itemNumber
             form.remark.data = project.remark
+            form.samplesDate.data = project.samplesDate
+            form.createLib.data = project.createLib
+            form.checkoutLib.data = project.checkoutLib
+            form.isSettle.data = project.isSettle
+            form.amogeneSettle.data = project.amogeneSettle
+            form.novoStage.data = project.novoStage
+            form.novoSettle.data = project.novoSettle
+            form.isReleaseData.data = project.isReleaseData
+            form.period.data = project.period
             return render_template('admin/project/projectInfo/projectEdit.html',form = form)
     if request.method == 'POST':
         if form.validate:
@@ -47,6 +56,15 @@ def projectEdit():
             project = Project.query.get(id)
             project.itemNumber = form.itemNumber.data
             project.remark = form.remark.data
+            project.samplesDate = form.samplesDate.data
+            project.createLib = form.createLib.data
+            project.checkoutLib = form.checkoutLib.data
+            project.isSettle = form.isSettle.data
+            project.amogeneSettle = form.amogeneSettle.data
+            project.novoStage = form.novoStage.data
+            project.novoSettle = form.novoSettle.data
+            project.isReleaseData = form.isReleaseData.data
+            project.period =form.period.data
             db.session.commit()
             mess = '修改成功'
             return render_template('admin/project/projectInfo/projectEdit.html',form = form, mess = mess)
@@ -67,7 +85,6 @@ def projectList():
         elif session.get('projectSearchData') != None:
             searchData = session.get('projectSearchData')
         searchData = '%' + searchData + '%'
-    print(searchData)
     if clientId != 0:  # 指定客户id号
         pagination =  Project.query.filter(Project.client_id == clientId).paginate(page,per_page)
     elif searchData != '': # 只有搜索内容
@@ -85,16 +102,24 @@ def projectDel():
         db.session.commit()
     return redirect(url_for('project.projectList'))
 
-
 @project_bp.route('/projectAdd',methods=['GET','POST'])
 def projectAdd():
-    form = FormAdd()
+    form = ProjectForm()
     if request.method =='POST':
         if form.validate:
             clientId = int(session.get('clientId'))
             client = Client.query.get(clientId)
             project = Project()
             project.itemNumber = form.itemNumber.data
+            project.samplesDate = form.samplesDate.data
+            project.createLib = form.createLib.data
+            project.checkoutLib = form.checkoutLib.data
+            project.isSettle = form.isSettle.data
+            project.amogeneSettle = form.amogeneSettle.data
+            project.novoStage = form.novoStage.data
+            project.novoSettle = form.novoSettle.data
+            project.isReleaseData = form.isReleaseData.data
+            project.period =form.period.data
             client.projects.append(project)
             db.session.commit()
             samples = form.samples.data

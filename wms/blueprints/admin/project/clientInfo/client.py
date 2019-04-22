@@ -23,7 +23,7 @@ def ClientDel():
         client = Client.query.get(id)
         db.session.delete(client)
         db.session.commit()
-    return redirect(url_for('client.clientlist'))
+    return redirect(url_for('client.clientList'))
 
 
 @client_bp.route('/clientList', methods=['GET','POST'])
@@ -39,8 +39,6 @@ def clientList():
         elif session.get('searchData') != None:
             searchData = session.get('searchData')
         searchData = '%' + searchData + '%'
-        #pagination = Client.query.filter( or_(Client.name.like(searchData), Client.name.like(searchData)), Client.organization.like(searchData), Client.address.like(searchData)).paginate(page,per_page)
-        #pagination = Client.query.filter(Client.name.like(searchData)).paginate(page,per_page)
         pagination = Client.query.filter(or_( Client.name.like(searchData),Client.organization.like(searchData),Client.email.like(searchData) ,Client.address.like(searchData)  )).paginate(page,per_page)
     else:
         pagination = Client.query.paginate(page,per_page)
@@ -123,12 +121,12 @@ def clientAdd():
             #     db.session.add(client)
             #     db.session.commit()
             mess ='客户:  ' + client.name + ' 添加成功'
-            return redirect(url_for('client.clientlist'))
+            return redirect(url_for('client.clientList'))
         else:
             mess = "添加失败，请验证数据正确"
-            return redirect(url_for('client.clientlist'))
+            return redirect(url_for('client.clientList'))
     mess = "添加失败，请却数据正确"
-    return redirect(url_for('client.clientlist'))
+    return redirect(url_for('client.clientList'))
 
 @client_bp.route('/clientQuery', methods=['GET','POST'])
 def clientQuery():

@@ -14,6 +14,42 @@
         <li class=" breadcrumb-item"><a href="#">{{ session['projectItem'] }}</a></li>
     </ol>
 </div>
+<div class="card">
+    <h3>项目信息>><a class=""
+        href="{{ url_for('project.projectEdit') }}?id={{ session['projectId'] }} ">编辑</a></h3>
+    <div class="card">
+        <h5 class=" card-header">金额信息</h5>
+        <div class=" card-body">
+            <label for="">是否结算:是</label>
+            <br>
+            <label for="">结算金额爱默核对:10000 元</label>
+            <br>
+            <label for="">诺和结算金额:10000 元</label>
+            <br>
+            <label for="">诺和分期号:005</label>
+            <br>
+        </div>
+
+        <h5 class=" card-header">实验信息</h5>
+        <div class=" card-body">
+            <label for="acceptTime">接收样品日期:20190422</label>
+            <br>
+            <label for="">建库人:张三</label>
+            <br>
+            <label for="">是否库检:是</label>
+            <br>
+            <label for="">是否释放数据:是</label>
+            <br>
+            <label for="">实验周期:4周</label>
+            <br>
+            <label for="">下载地址</label>
+        </div>
+        <h5 class=" card-header">备注信息</h5>
+        <div class=" card-body">
+            备注信息
+        </div>
+    </div>
+</div>
 
 <div>
     <h3>样品信息</h3>
@@ -36,28 +72,29 @@
             </tr>
         </thead>
         <tbody id="tbody">
-                {% for sample in samplesPagination.items %}
-                <tr>
-                    <td>{{ sample.amogeneItem }}</td>
-                    <td>{{ sample.libraryType }}</td>
-                    <td>{{ sample.seqType }}</td>
-                    <td>{{ sample.sampleType }}</td>
-                    <td>{{ sample.species }}</td>
-                    <td>{{ sample.seqDose }}</td>
-                    <td>{{ sample.indexItem }}</td>
-                    <td>{{ sample.indexForward }}</td>
-                    <td>{{ sample.extractStatus }}</td>
-                    <td>{{ sample.seqTimes }}</td>
-                    <td>{{ sample.chartName }}</td>
-                    <td>
-                        <div class=" btn-group">
-                            <a class="btn btn-secondary" href="{{ url_for('samples.samplesEdit') }}?id={{ sample.id }}">编辑</a>
-                            <a class="btn btn-danger" href="{{ url_for('samples.samplesDel') }}?id={{ sample.id }}">删除</a>
-                        </div>
-                    </td>
-                </tr>
-                {% endfor %}
-            
+            {% for sample in samplesPagination.items %}
+            <tr>
+                <td>{{ sample.amogeneItem }}</td>
+                <td>{{ sample.libraryType }}</td>
+                <td>{{ sample.seqType }}</td>
+                <td>{{ sample.sampleType }}</td>
+                <td>{{ sample.species }}</td>
+                <td>{{ sample.seqDose }}</td>
+                <td>{{ sample.indexItem }}</td>
+                <td>{{ sample.indexForward }}</td>
+                <td>{{ sample.extractStatus }}</td>
+                <td>{{ sample.seqTimes }}</td>
+                <td>{{ sample.chartName }}</td>
+                <td>
+                    <div class=" btn-group">
+                        <a class="btn btn-secondary"
+                            href="{{ url_for('samples.samplesEdit') }}?id={{ sample.id }}">编辑</a>
+                        <a class="btn btn-danger" href="{{ url_for('samples.samplesDel') }}?id={{ sample.id }}">删除</a>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+
         </tbody>
     </table>
     <br>
@@ -92,7 +129,8 @@
                     <div class=" btn-group">
                         <a class="btn btn-secondary"
                             href="{{ url_for('analysis.analysisEdit') }}?id={{ analysis.id }}">编辑</a>
-                        <a class="btn btn-danger" href="{{ url_for('analysis.analysisDel') }}?id={{ analysis.id }}">删除</a>
+                        <a class="btn btn-danger"
+                            href="{{ url_for('analysis.analysisDel') }}?id={{ analysis.id }}">删除</a>
                     </div>
                 </td>
             </tr>

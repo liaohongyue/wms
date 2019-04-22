@@ -1,6 +1,7 @@
 from wms.extension import db
 
 class Sample(db.Model):
+    __tablename__='sample'
     id = db.Column(db.Integer, primary_key = True)
     amogeneItem = db.Column(db.String(30))
     species = db.Column(db.String(30))
