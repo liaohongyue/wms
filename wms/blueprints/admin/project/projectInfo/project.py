@@ -48,6 +48,7 @@ def projectEdit():
             form.novoStage.data = project.novoStage
             form.novoSettle.data = project.novoSettle
             form.isReleaseData.data = project.isReleaseData
+            form.downloadInfo.data = project.downloadInfo
             form.period.data = project.period
             return render_template('admin/project/projectInfo/projectEdit.html',form = form)
     if request.method == 'POST':
@@ -124,12 +125,14 @@ def projectAdd():
             db.session.commit()
             samples = form.samples.data
             samples = samples.split(sep='\n')
+            print(samples)
             for sample in samples:
                 sampleInfo = Sample() # 初始化模型
                 if sample == '':continue #判断输入数据
                 sample = sample.split(sep='\t')
                 if sample[0] == '':continue
                 sampleInfo.amogeneItem  = sample[0]
+                if len(sample) <2  : continue
                 sampleInfo.libraryType  = sample[1]
                 sampleInfo.seqType  = sample[2]
                 sampleInfo.sampleType = sample[3]

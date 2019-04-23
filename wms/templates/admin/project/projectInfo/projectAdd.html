@@ -39,6 +39,8 @@
         {{ form.isReleaseData(class='form-control',style="width:400px;") }}
         {{ form.period.label }}
         {{ form.period(class='form-control',style="width:400px;") }}
+        {{ form.downloadInfo.label }}
+        {{ form.downloadInfo(class='form-control',style="width:400px;") }}
     </div>
 
     <div class="form-group">
@@ -106,6 +108,31 @@
     );
     $(function () {
                 $("#checkData").click(function () {
+
+                    $samplesArea = $("#SamplesArea").val();
+                    $samplesContent =''
+                    $samplesList = $samplesArea.split('\n');
+                    for ($i in $samplesList) {
+                        $lineData = $samplesList[$i];
+                        $lineData = $lineData.split('\t');
+
+                        if( $lineData[0] != '\r\n' ||  ($samplesContent != '') ){
+                            $samplesContent += "\n";
+                            for($j=0 ; $j<11; $j++ ){
+                                if ( (typeof $lineData[$j]) == 'undefined' ){ $lineData[$j]="default" };
+                                //if ( $lineData[$j] == '' ){ $lineData[$j]="default" };
+                                //console.log('==');
+                                $samplesContent += $lineData[$j];
+                                if( $j <10) {
+                                    $samplesContent += "\t"
+                                }
+                            }
+                        }
+                    }
+
+                    $("#SamplesArea").val($samplesContent);
+                    //$samplesArea = $samplesContent
+
                     $tableBody = ''
                     $samplesArea = $("#SamplesArea").val();
                     if($samplesArea != ''){
@@ -125,6 +152,7 @@
                         $extractStatus = $lineData[8];
                         $seqTimes = $lineData[9];
                         $chartName = $lineData[10];
+                        //console.log($chartName)
         
                         $tr = '<tr>\n' +
                             ' <td>' + $amogeneNumber + '</td>\n' +
@@ -141,8 +169,9 @@
                             '  </tr>';
                         $tableBody = $tableBody + $tr;
                     }
+
                     $("#tbody").html($tableBody);
-                    //$("#SamplesArea").attr('disabled', 'disabled');
+                    $("#SamplesArea").attr('type', 'hidden');
                     $("#SamplesArea").hide();
                     $("#checkData").hide();
                     $('#resetData').show();

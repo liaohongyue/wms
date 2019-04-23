@@ -15,6 +15,7 @@ class ProjectForm(FlaskForm):
     novoSettle = StringField("诺和结算金额（元）:")
     isReleaseData = StringField("是否释放数据")
     period = StringField("实验周期")
+    downloadInfo = TextAreaField("样品下载地址",render_kw={'rows':'5'})
     samples = TextAreaField("样品信息",render_kw={'placeholder':'按格式要求输入样品信息，制表符分隔','rows':'10','id':'SamplesArea'})
     remark = TextAreaField("备注信息",render_kw={'placeholder':'这里输入一些项目备注信息','rows':'5','id':'remarkInfo'})
     submit = SubmitField("提交数据")

@@ -9,47 +9,86 @@
 
 <div class=" ">
     <ol class=" breadcrumb">
-        <li class=" breadcrumb-item"><a href="#">{{ session['clientOrg'] }}</a></li>
-        <li class=" breadcrumb-item"><a href="#">{{ session['clientName'] }}</a></li>
-        <li class=" breadcrumb-item"><a href="#">{{ session['projectItem'] }}</a></li>
+        <li class=" breadcrumb-item"><a href="#">{{ client.organization }}</a></li>
+        <li class=" breadcrumb-item"><a href="#">{{ client.name }}</a></li>
+        <li class=" breadcrumb-item"><a href="#">{{ project.itemNumber }}</a></li>
     </ol>
 </div>
-<div class="card">
-    <h3>项目信息>><a class=""
-        href="{{ url_for('project.projectEdit') }}?id={{ session['projectId'] }} ">编辑</a></h3>
-    <div class="card">
+
+<div class="row">
+    <div class="col-md-12">
+        <h3>客户信息<small>
+                <a class="" href="{{ url_for('client.clientEdit') }}?id={{ client.id }}">编辑</a></small>
+        </h3>
+        <label for="">姓名：{{ client.name }}</label>
+        <br>
+        <label for="">单位：{{ client.organization }}</label>
+        <br>
+        <label for="">地址：{{ client.address }}</label>
+        <br>
+        <label for="">电子邮箱：{{ client.email }}</label>
+        <br>
+    </div>
+
+
+</div>
+
+<hr>
+<div class="row">
+    <div class="col-md-12">
+        <h3>项目信息
+            <small><a class="" href="{{ url_for('project.projectEdit') }}?id={{ session['projectId'] }} ">编辑</a></small>
+        </h3>
+    </div>
+
+    <div class=" col-md-4 card">
+
         <h5 class=" card-header">金额信息</h5>
         <div class=" card-body">
-            <label for="">是否结算:是</label>
+            <label for="">是否结算:{{ project.isSettle }}</label>
             <br>
-            <label for="">结算金额爱默核对:10000 元</label>
+            <label for="">结算金额爱默核对:{{ project.amogeneSettle }} 元</label>
             <br>
-            <label for="">诺和结算金额:10000 元</label>
+            <label for="">诺和结算金额:{{ project.novoSettle }} 元</label>
             <br>
-            <label for="">诺和分期号:005</label>
+            <label for="">诺和分期号:{{ project.novoStage }}</label>
             <br>
         </div>
 
+    </div>
+
+    <div class=" col-md-4 card">
         <h5 class=" card-header">实验信息</h5>
         <div class=" card-body">
-            <label for="acceptTime">接收样品日期:20190422</label>
+            <label for="acceptTime">接收样品日期:{{ project.samplesDate }}</label>
             <br>
-            <label for="">建库人:张三</label>
+            <label for="">建库人:{{ project.createLib }}</label>
             <br>
-            <label for="">是否库检:是</label>
+            <label for="">是否库检:{{ project.checkoutLib }}</label>
             <br>
-            <label for="">是否释放数据:是</label>
+            <label for="">是否释放数据:{{ project.isReleaseData }}</label>
             <br>
-            <label for="">实验周期:4周</label>
+            <label for="">实验周期（工作日）:{{ project.period }}</label>
             <br>
-            <label for="">下载地址</label>
+
         </div>
+    </div>
+
+    <div class=" col-md-4 card">
+        <label for="" class=" card-header">下载地址:
+            <div class=" card-body">
+                {{ project.downloadInfo }}
+            </div>
+        </label>
         <h5 class=" card-header">备注信息</h5>
         <div class=" card-body">
-            备注信息
+            {{ project.remark }}
         </div>
     </div>
 </div>
+
+<hr>
+
 
 <div>
     <h3>样品信息</h3>

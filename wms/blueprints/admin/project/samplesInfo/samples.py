@@ -51,6 +51,7 @@ def samplesAdd():
                 sample = sample.split(sep='\t')
                 if sample[0] == '':continue
                 sampleInfo.amogeneItem  = sample[0]
+                if len(sample) <2  : continue
                 sampleInfo.libraryType  = sample[1]
                 sampleInfo.seqType  = sample[2]
                 sampleInfo.sampleType = sample[3]

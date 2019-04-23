@@ -10,4 +10,4 @@ class Client(db.Model):
     telephone = db.Column(db.String(15))
     address = db.Column(db.String(100))
     remark = db.Column(db.String(500))
-    projects = db.relationship('Project')
+    projects = db.relationship('Project', back_populates='client')

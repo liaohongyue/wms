@@ -87,6 +87,31 @@
     );
     $(function () {
                 $("#checkData").click(function () {
+
+                    $samplesArea = $("#SamplesArea").val();
+                    $samplesContent =''
+                    $samplesList = $samplesArea.split('\n');
+                    for ($i in $samplesList) {
+                        $lineData = $samplesList[$i];
+                        $lineData = $lineData.split('\t');
+
+                        if( $lineData[0] != '\r\n' ||  ($samplesContent != '') ){
+                            $samplesContent += "\n";
+                            for($j=0 ; $j<11; $j++ ){
+                                if ( (typeof $lineData[$j]) == 'undefined' ){ $lineData[$j]="default" };
+                                //if ( $lineData[$j] == '' ){ $lineData[$j]="default" };
+                                //console.log('==');
+                                $samplesContent += $lineData[$j];
+                                if( $j <10) {
+                                    $samplesContent += "\t"
+                                }
+                            }
+                        }
+                    }
+
+                    $("#SamplesArea").val($samplesContent);
+
+
                     $tableBody = ''
                     $samplesArea = $("#SamplesArea").val();
                     if($samplesArea != ''){

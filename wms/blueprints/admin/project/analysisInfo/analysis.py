@@ -34,13 +34,17 @@ def analysisList():
         projectId = int(session.get('projectId'))
         per_page =40
         if projectId != 0:
+            project = Project.query.get(projectId)
+            client = project.client
+            session['clientOrg'] = client.organization
+            session['clientName'] = client.name
             pagination = Analysis.query.filter(Analysis.projects_id == projectId ).paginate(page,per_page)
         else:
             return redirect(url_for('project.projectList'))
         #pagination = Analysis.query.paginate(page,per_page)
         samplesPagination = Sample.query.filter(Sample.projects_id == projectId).paginate(page,per_page)
         #samplesPagination = Sample.query.paginate(page,per_page)
-        return render_template('admin/project/analysisInfo/analysisList.html',form = form,pagination = pagination, samplesPagination = samplesPagination)
+        return render_template('admin/project/analysisInfo/analysisList.html',form = form,pagination = pagination, samplesPagination = samplesPagination, project = project, client = client)
     mess = ''
     return render_template('admin/project/analysisInfo/analysisList.html',form = form, mess=mess)
 
