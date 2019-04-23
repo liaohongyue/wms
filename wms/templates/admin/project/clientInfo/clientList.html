@@ -58,42 +58,41 @@
         </form>
     </div>
     <hr>
-    <form action="">
-        <table class=" table  table-hover">
-            <thead class="  table-info rounded">
-                <tr>
-                    <td>姓名</td>
-                    <td>性别</td>
-                    <td>单位</td>
-                    <td>电话</td>
-                    <td>电子邮箱</td>
-                    <td>通讯地址</td>
-                    <td>备注信息</td>
-                    <td>操作</td>
-                </tr>
-            </thead>
-            <tbody class="">
-                {% for client in pagination.items  %}
-                <tr>
-                    <td><a href="{{ url_for('project.projectList') }}?clientId={{ client.id }}">{{ client.name }}</a></td>
-                    <td>{{ client.gender }}</td>
-                    <td>{{ client.organization }}</td>
-                    <td>{{ client.telephone }}</td>
-                    <td>{{ client.email }}</td>
-                    <td>{{ client.address }}</td>
-                    <td>{{ client.remark }}</td>
-                    <td>
-                        <div class=" btn-group">
-                            <a class="btn btn-secondary"
-                                href="{{ url_for('client.clientEdit') }}?id={{ client.id }}">编辑</a>
-                            <a class="btn btn-danger" href="{{ url_for('client.ClientDel') }}?id={{ client.id }}">删除</a>
-                        </div>
-                    </td>
-                </tr>
-                {% endfor  %}
-            </tbody>
-        </table>
-    </form>
+
+    <table class=" table  table-hover">
+        <thead class="  table-info rounded">
+            <tr>
+                <td>姓名</td>
+                <td>性别</td>
+                <td>单位</td>
+                <td>电话</td>
+                <td>电子邮箱</td>
+                <td>通讯地址</td>
+                <td>备注信息</td>
+                <td>操作</td>
+            </tr>
+        </thead>
+        <tbody class="">
+            {% for client in pagination.items  %}
+            <tr>
+                <td><a href="{{ url_for('project.projectList') }}?clientId={{ client.id }}">{{ client.name }}</a></td>
+                <td>{{ client.gender }}</td>
+                <td>{{ client.organization }}</td>
+                <td>{{ client.telephone }}</td>
+                <td>{{ client.email }}</td>
+                <td>{{ client.address }}</td>
+                <td>{{ client.remark }}</td>
+                <td>
+                    <div class=" btn-group">
+                        <a class="btn btn-secondary" href="{{ url_for('client.clientEdit') }}?id={{ client.id }}">编辑</a>
+                        <a class="btn btn-danger" href="{{ url_for('client.ClientDel') }}?id={{ client.id }}">删除</a>
+                    </div>
+                </td>
+            </tr>
+            {% endfor  %}
+        </tbody>
+    </table>
+
 </div>
 
 <hr>
