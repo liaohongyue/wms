@@ -16,6 +16,6 @@ class Project(db.Model):
     downloadInfo = db.Column(db.String(1000))
     remark = db.Column(db.String(200))
     client_id = db.Column(db.Integer, db.ForeignKey('client.id'))
-    analysis = db.relationship('Analysis')
-    samples = db.relationship('Sample')
+    analysis = db.relationship('Analysis', cascade = "all")
+    samples = db.relationship('Sample', cascade = "all")
     client = db.relationship('Client', back_populates='projects')

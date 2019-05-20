@@ -12,3 +12,10 @@ class  AdminForm(FlaskForm):
     password = StringField('密码')
     password_enter = StringField("确认密码")
     submit = SubmitField("提交数据")
+
+
+class PasswordEditForm(FlaskForm):
+    oldPassword = StringField('旧密码', validators=[DataRequired])
+    newPassword = StringField('新密码', validators=[DataRequired])
+    new2Password = StringField('确认密码', validators=[DataRequired])
+    submit = SubmitField("确认修改")

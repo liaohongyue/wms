@@ -5,6 +5,7 @@ from wms.models.analysis import Analysis
 from wms.models.sample import Sample
 from wms.models.project import Project
 from wms.extension import db
+from flask_login import login_required
 
 analysis_bp = Blueprint('analysis',__name__)
 
@@ -14,6 +15,11 @@ def navInfo():
     secondnav='analysisInfo'
     pageTitle='分析信息'
     return dict(firstnav=firstnav,secondnav=secondnav,pageTitle=pageTitle)
+
+@analysis_bp.before_request
+@login_required
+def login_protect():
+    pass
 
 @analysis_bp.before_request
 def initInfo():
@@ -36,6 +42,7 @@ def analysisList():
         if projectId != 0:
             project = Project.query.get(projectId)
             client = project.client
+            print( client )
             session['clientOrg'] = client.organization
             session['clientName'] = client.name
             pagination = Analysis.query.filter(Analysis.projects_id == projectId ).paginate(page,per_page)
@@ -45,8 +52,7 @@ def analysisList():
         samplesPagination = Sample.query.filter(Sample.projects_id == projectId).paginate(page,per_page)
         #samplesPagination = Sample.query.paginate(page,per_page)
         return render_template('admin/project/analysisInfo/analysisList.html',form = form,pagination = pagination, samplesPagination = samplesPagination, project = project, client = client)
-    mess = ''
-    return render_template('admin/project/analysisInfo/analysisList.html',form = form, mess=mess)
+    return render_template('admin/project/analysisInfo/analysisList.html',form = form)
 
 @analysis_bp.route('/analysisEdit',methods=['GET','POST'])
 def analysisEdit():

@@ -1,9 +1,10 @@
-from flask import Blueprint, render_template,request,redirect,url_for
-from wms.forms.admin import AdminForm
+from flask import Blueprint, render_template,request,redirect,url_for, flash
+from wms.forms.admin import AdminForm, PasswordEditForm
 from wms.models.admin import Admin
 from wms.extension import db
 from faker import Faker
 import faker
+from flask import flash, session
 
 user_bp = Blueprint('user',__name__)
 
@@ -48,16 +49,17 @@ def userAdd():
             admin.telephone = form.telephone.data
             admin.email = form.email.data
             admin.unit = form.unit.data
-            admin.password_hash = form.password.data
+            password = form.password.data
+            admin.set_password(str(password))
             db.session.add(admin)
             db.session.commit()
             mess = form.name.data + "添加成功"
-            return render_template('admin/user/userList.html',form = form,mess=mess,adminList='')
+            return redirect(url_for('user.userList'))
         else: 
             mess = '添加失败'
-            return render_template('admin/user/userList.html',form = form, mess= mess,adminList='')
+            redirect(url_for('user.userList'))
     mess=''
-    return render_template('admin/user/userList.html',form = form, mess= mess)
+    return redirect(url_for('user.userList'))
 
 
 
@@ -94,7 +96,21 @@ def userInfoEdit():
         db.session.commit()
     return redirect(url_for('user.userList'))
 
-@user_bp.route('/userPasswordEdit')
+@user_bp.route('/userPasswordEdit', methods=['POST','GET'])
 def userPasswordEdit():
-    mess=''
-    return render_template('admin/user/userPasswordEdit.html',mess=mess)
+    form = PasswordEditForm()
+    userId = session.get('user_id')
+    if request.method == 'POST' and form.validate:
+        oldPassword = form.oldPassword.data
+        newPassword = form.newPassword.data
+        userId = session.get('user_id')
+        admin = Admin.query.get(int( userId))
+        if admin.validate_password(oldPassword):
+            admin.set_password(newPassword)
+            db.session.commit()
+            flash('密码 修改成功')
+            return redirect( url_for('user.userPasswordEdit') )
+        else:
+            flash("密码 错误")
+            return redirect( url_for('user.userPasswordEdit') )
+    return render_template('admin/user/userPasswordEdit.html', form = form)

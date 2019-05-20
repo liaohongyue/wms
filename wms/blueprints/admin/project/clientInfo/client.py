@@ -1,12 +1,19 @@
-from flask import Blueprint,session
+from flask import Blueprint,session, flash
 from flask import render_template, redirect, url_for ,request
 from wms.forms.client import ClientForm,ClientQuery
 from wms.models.client import Client
 from wms.extension import db
 from sqlalchemy import or_
 from faker import Faker
+from flask_login import login_required
 
 client_bp = Blueprint('client',__name__)
+
+@client_bp.before_request
+@login_required
+def login_protect():
+    pass
+
 
 @client_bp.context_processor
 def navInfo():
@@ -63,7 +70,6 @@ def clientEdit():
         form.address.data = client.address
         form.remark.data = client.remark
         return render_template('admin/project/clientInfo/clientEdit.html',form = form)
-
     if request.method == 'POST':
         if form.validate:
             id = form.clientId.data
@@ -79,15 +85,14 @@ def clientEdit():
             client.address = form.address.data
             client.remark = form.remark.data
             db.session.commit()
-            mess = '修改成功'
-            return render_template('admin/project/clientInfo/clientEdit.html',form = form,mess = mess)
-        mess = '修改失败'
-    return render_template('admin/project/clientInfo/clientEdit.html',form = form,mess = mess)
+            flash( '修改成功' )
+            return render_template('admin/project/clientInfo/clientEdit.html',form = form)
+        flash( '修改失败' )
+    return render_template('admin/project/clientInfo/clientEdit.html',form = form)
 
 @client_bp.route('/clientAdd', methods=['GET','POST'])
 def clientAdd():
     form = ClientForm()
-    formquery = ClientQuery()
     if request.method =='POST': 
         if form.validate:
             client = Client()
@@ -104,7 +109,7 @@ def clientAdd():
             db.session.add(client)
             db.session.commit()
             #===========================
-            # for i in range(3000):
+            # for i in range(1000):
             #     fake = Faker(locale='zh_CN')
             #     info = fake.profile(fields=None, sex=None)
             #     client = Client()
@@ -120,12 +125,12 @@ def clientAdd():
             #     client.remark = info['job']
             #     db.session.add(client)
             #     db.session.commit()
-            mess ='客户:  ' + client.name + ' 添加成功'
+            flash( '客户:  ' + client.name + ' 添加成功' )
             return redirect(url_for('client.clientList'))
         else:
-            mess = "添加失败，请验证数据正确"
+            flash( "添加失败，请验证数据正确" )
             return redirect(url_for('client.clientList'))
-    mess = "添加失败，请却数据正确"
+    flash(' 添加失败，确认数据正确 ')
     return redirect(url_for('client.clientList'))
 
 @client_bp.route('/clientQuery', methods=['GET','POST'])
@@ -133,9 +138,8 @@ def clientQuery():
     formquery = ClientQuery()
     form = ClientForm()
     if request.method =='POST' and formquery.validate():
-        mess = "搜索成功"
+        flash('查询成功！')
         return render_template('admin/project/clientInfo/clientList.html',form = form ,formq = formquery,mess=mess)
-    # mess = "搜索失败"
-    mess = ''
+    flash("查询失败！")
     return render_template('admin/project/clientInfo/clientList.html',form= form, formq= formquery,mess=mess)
 

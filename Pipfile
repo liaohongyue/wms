@@ -16,6 +16,7 @@ wtforms = "*"
 flask-sqlalchemy = "*"
 pymysql = "*"
 bootstrap-flask = "*"
+flask-login = "*"
 
 [requires]
 python_version = "3.7"

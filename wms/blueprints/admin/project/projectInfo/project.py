@@ -1,10 +1,11 @@
-from flask import Blueprint, request, redirect, url_for
+from flask import Blueprint, request, redirect, url_for, flash
 from flask import render_template, session
 from wms.forms.project import  FormQuery, ProjectForm
 from wms.models.sample import Sample
 from wms.models.project import Project
 from wms.models.client import Client
 from wms.extension import db
+from flask_login import login_required
 
 project_bp = Blueprint('project',__name__)
 
@@ -14,6 +15,12 @@ def navInfo():
     secondnav='projectInfo'
     pageTitle ='项目信息'
     return dict(firstnav=firstnav,secondnav=secondnav, pageTitle= pageTitle)
+
+@project_bp.before_request
+@login_required
+def login_protect():
+    pass
+
 
 @project_bp.before_request
 def initInfo():
@@ -125,14 +132,16 @@ def projectAdd():
             db.session.commit()
             samples = form.samples.data
             samples = samples.split(sep='\n')
-            print(samples)
+            errInfo = ''
             for sample in samples:
                 sampleInfo = Sample() # 初始化模型
                 if sample == '':continue #判断输入数据
                 sample = sample.split(sep='\t')
                 if sample[0] == '':continue
+                if len(sample) < 11:
+                    errInfo = errInfo + str( sample[0] ) + '：样品信息没有正常输入<br>'
+                    continue
                 sampleInfo.amogeneItem  = sample[0]
-                if len(sample) <2  : continue
                 sampleInfo.libraryType  = sample[1]
                 sampleInfo.seqType  = sample[2]
                 sampleInfo.sampleType = sample[3]
@@ -145,7 +154,8 @@ def projectAdd():
                 sampleInfo.chartName = sample[10]
                 project.samples.append(sampleInfo)
                 db.session.commit()
-            mess = '添加成功'
+            flash(errInfo)
+            mess = '项目信息添加成功！'
             return render_template('admin/project/projectInfo/projectAdd.html',form = form,mess = mess)
         else:
             mess =  form.samples.data

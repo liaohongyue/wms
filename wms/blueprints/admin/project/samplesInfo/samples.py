@@ -4,8 +4,14 @@ from sqlalchemy import or_
 from wms.models.sample import Sample
 from wms.models.project import Project
 from wms.extension import db
+from flask_login import login_required
 
 samples_bp = Blueprint('samples',__name__)
+
+@samples_bp.before_request
+@login_required
+def login_protect():
+    pass
 
 @samples_bp.context_processor
 def navInfo():
