@@ -46,9 +46,9 @@ def clientList():
         elif session.get('searchData') != None:
             searchData = session.get('searchData')
         searchData = '%' + searchData + '%'
-        pagination = Client.query.filter(or_( Client.name.like(searchData),Client.organization.like(searchData),Client.email.like(searchData) ,Client.address.like(searchData)  )).paginate(page,per_page)
+        pagination = Client.query.filter(or_( Client.name.like(searchData),Client.organization.like(searchData),Client.email.like(searchData) ,Client.address.like(searchData)  )).order_by(Client.id.desc() ).paginate(page,per_page)
     else:
-        pagination = Client.query.paginate(page,per_page)
+        pagination = Client.query.order_by(Client.id.desc() ).paginate(page,per_page)
     return render_template('admin/project/clientInfo/clientList.html',form = form,formq=formquery,pagination= pagination )
 
 

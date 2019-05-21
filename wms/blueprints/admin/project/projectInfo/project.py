@@ -1,5 +1,6 @@
 from flask import Blueprint, request, redirect, url_for, flash
 from flask import render_template, session
+from sqlalchemy import or_ , and_
 from wms.forms.project import  FormQuery, ProjectForm
 from wms.models.sample import Sample
 from wms.models.project import Project
@@ -30,7 +31,8 @@ def initInfo():
             session['clientId'] = '0'
             session['clientName'] = '所有客户'
             session['clientOrg'] = ''
-        else:
+            session['projectSearchData'] = ''
+        elif clientId != '': 
             session['clientId'] = clientId
             client = Client.query.get(int(clientId))
             session['clientName'] = client.name
@@ -46,6 +48,7 @@ def projectEdit():
             project = Project.query.get(id)
             form.projectId.data = id
             form.itemNumber.data = project.itemNumber
+            form.progress.data = project.progress
             form.remark.data = project.remark
             form.samplesDate.data = project.samplesDate
             form.createLib.data = project.createLib
@@ -63,6 +66,7 @@ def projectEdit():
             id = form.projectId.data
             project = Project.query.get(id)
             project.itemNumber = form.itemNumber.data
+            project.progress = form.progress.data
             project.remark = form.remark.data
             project.samplesDate = form.samplesDate.data
             project.createLib = form.createLib.data
@@ -74,10 +78,10 @@ def projectEdit():
             project.isReleaseData = form.isReleaseData.data
             project.period =form.period.data
             db.session.commit()
-            mess = '修改成功'
-            return render_template('admin/project/projectInfo/projectEdit.html',form = form, mess = mess)
-    mess = '修改失败'
-    return render_template('admin/project/projectInfo/projectEdit.html',form = form, mess = mess)
+            flash('修改成功')
+        else:
+            flash( '数据有误，修改失败' )
+    return redirect(url_for('analysis.analysisList'))
 
 @project_bp.route('/projectList',methods=['GET','POST'])
 def projectList():
@@ -86,6 +90,7 @@ def projectList():
     page = request.args.get('page', 1, type=int)
     clientId = int(session.get('clientId'))
     per_page = 5
+    # 判断是否更新查询内容
     if form.itemNumber.data != None or session.get('projectSearchData') != None:
         if form.itemNumber.data != None:
             searchData = str(form.itemNumber.data)
@@ -94,11 +99,15 @@ def projectList():
             searchData = session.get('projectSearchData')
         searchData = '%' + searchData + '%'
     if clientId != 0:  # 指定客户id号
-        pagination =  Project.query.filter(Project.client_id == clientId).paginate(page,per_page)
+        pagination =  Project.query.filter(Project.client_id == clientId).order_by(Project.id.desc() ).paginate(page,per_page)
+        if searchData != '': # 搜索内容
+            pagination =Project.query.filter(and_(Project.client_id == clientId , or_( Project.itemNumber.like(searchData), Project.progress.like(searchData) ))).order_by(Project.id.desc() ).paginate(page,per_page)
     elif searchData != '': # 只有搜索内容
-        pagination =Project.query.filter(Project.itemNumber.like(searchData)).paginate(page,per_page)
+        session['clientName'] = searchData
+        pagination =Project.query.filter(or_( Project.itemNumber.like(searchData), Project.progress.like(searchData) )).order_by(Project.id.desc() ).paginate(page,per_page)
     else: # 没有指定客户id，也没搜索内容
-        pagination =Project.query.paginate(page,per_page)
+        session['clientName'] = '所有客户'
+        pagination =Project.query.order_by(Project.id.desc() ).paginate(page,per_page)
     return render_template('admin/project/projectInfo/projectList.html',form = form,pagination = pagination)
 
 @project_bp.route('/projectDel/')
@@ -139,7 +148,7 @@ def projectAdd():
                 sample = sample.split(sep='\t')
                 if sample[0] == '':continue
                 if len(sample) < 11:
-                    errInfo = errInfo + str( sample[0] ) + '：样品信息没有正常输入<br>'
+                    errInfo = errInfo + str( sample[0] ) + '：样品信息没有正常输入'
                     continue
                 sampleInfo.amogeneItem  = sample[0]
                 sampleInfo.libraryType  = sample[1]
@@ -154,9 +163,10 @@ def projectAdd():
                 sampleInfo.chartName = sample[10]
                 project.samples.append(sampleInfo)
                 db.session.commit()
-            flash(errInfo)
-            mess = '项目信息添加成功！'
-            return render_template('admin/project/projectInfo/projectAdd.html',form = form,mess = mess)
+            #flash(errInfo)
+            flash('项目信息添加成功！')
+            url = url_for('project.projectList') +  '?clientId=' + str( clientId )
+            return redirect( url)
         else:
             mess =  form.samples.data
             return render_template('admin/project/projectInfo/projectAdd.html',form = form,mess = mess)

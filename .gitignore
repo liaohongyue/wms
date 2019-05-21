@@ -6,5 +6,6 @@
 # vscod file
 /.vscode
 
+/相关文件
 # python file
 test.py

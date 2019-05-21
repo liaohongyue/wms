@@ -1,11 +1,13 @@
 from flask import Blueprint,render_template, request,redirect,url_for
-from flask import session
+from flask import session, flash
 from wms.forms.analysis import AnalysisForm
+from wms.forms.project import ProjectLogForm
 from wms.models.analysis import Analysis
 from wms.models.sample import Sample
-from wms.models.project import Project
+from wms.models.project import Project, ProjectLog
 from wms.extension import db
 from flask_login import login_required
+import time
 
 analysis_bp = Blueprint('analysis',__name__)
 
@@ -32,9 +34,29 @@ def initInfo():
         session['projectId'] = '0'
 
 
+@analysis_bp.route('/addProjectLog',methods=['POST']  )
+def ProjectLogAdd():
+    form = ProjectLogForm()
+    if form.validate and request.method == 'POST':
+        project = Project.query.get(int( session.get('projectId') ) )
+        localTime =  time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+        Log = ProjectLog()
+        Log.addTime = localTime
+        Log.text = form.text.data
+        print(Log.text)
+        project.logs.append(Log)
+        db.session.commit()
+        flash("日志添加成功")
+    else:
+        flash("日志添加失败")
+    return redirect(url_for('analysis.analysisList'))
+
+
+
 @analysis_bp.route('/analysisList',methods=['GET','POST'])
 def analysisList():
     form = AnalysisForm()
+    logform = ProjectLogForm()
     if request.method == 'GET':
         page = request.args.get('page', 1, type=int)
         projectId = int(session.get('projectId'))
@@ -42,7 +64,6 @@ def analysisList():
         if projectId != 0:
             project = Project.query.get(projectId)
             client = project.client
-            print( client )
             session['clientOrg'] = client.organization
             session['clientName'] = client.name
             pagination = Analysis.query.filter(Analysis.projects_id == projectId ).paginate(page,per_page)
@@ -50,8 +71,9 @@ def analysisList():
             return redirect(url_for('project.projectList'))
         #pagination = Analysis.query.paginate(page,per_page)
         samplesPagination = Sample.query.filter(Sample.projects_id == projectId).paginate(page,per_page)
+        projectLogs = ProjectLog.query.filter( ProjectLog.projects_id == projectId).order_by(ProjectLog.id)
         #samplesPagination = Sample.query.paginate(page,per_page)
-        return render_template('admin/project/analysisInfo/analysisList.html',form = form,pagination = pagination, samplesPagination = samplesPagination, project = project, client = client)
+        return render_template('admin/project/analysisInfo/analysisList.html',form = form,pagination = pagination, samplesPagination = samplesPagination, project = project, client = client, projectLogs = projectLogs, logform = logform )
     return render_template('admin/project/analysisInfo/analysisList.html',form = form)
 
 @analysis_bp.route('/analysisEdit',methods=['GET','POST'])

@@ -10,7 +10,8 @@
 <div class=" ">
     <ol class=" breadcrumb">
         <li class=" breadcrumb-item"><a href="#">{{ client.organization }}</a></li>
-        <li class=" breadcrumb-item"><a href="#">{{ client.name }}</a></li>
+        <li class=" breadcrumb-item"><a
+                href="{{ url_for('project.projectList') }}?clientId={{ client.id }}">{{ client.name }}</a></li>
         <li class=" breadcrumb-item"><a href="#">{{ project.itemNumber }}</a></li>
     </ol>
 </div>
@@ -70,6 +71,8 @@
             <br>
             <label for="">实验周期（工作日）:{{ project.period }}</label>
             <br>
+            <label for="">实验进度:{{ project.progress }}</label>
+            <br>
 
         </div>
     </div>
@@ -83,6 +86,40 @@
         <h5 class=" card-header">备注信息</h5>
         <div class=" card-body">
             {{ project.remark }}
+        </div>
+    </div>
+
+    <div class=" col-md-4 card">
+        <h5 class=" card-header">项目日志 <small> <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
+                    data-target="#addLog">添加</a> </small></h5>
+
+        <div class="modal fade" id="addLog">
+            <div class="modal-dialog">
+                <form action="{{ url_for('analysis.ProjectLogAdd') }}" method="POST">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">添加日志</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            {{ logform.csrf_token }}
+                            {{ logform.text.lable }}
+                            {{ logform.text(class="form-control") }}
+                        </div>
+                        <div class="modal-footer">
+                            {{ logform.submit( class="btn btn-primary") }}
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class=" card-body">
+            {% for log in projectLogs %}
+            {{ log.addTime }}:
+            {{ log.text }}<br>
+            {% endfor %}
         </div>
     </div>
 </div>
